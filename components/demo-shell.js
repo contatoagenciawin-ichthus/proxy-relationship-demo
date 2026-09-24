@@ -4,21 +4,23 @@ import { useEffect, useMemo, useState } from "react";
 
 const navItems = [
   ["overview", "Visão geral"],
-  ["email", "E-mails"],
+  ["email", "E-mail"],
   ["contacts", "Contatos"],
   ["whatsapp", "WhatsApp"],
-  ["reports", "Relatórios"],
+  ["reports", "Inteligência"],
 ];
 
 const campaigns = [
   {
     id: 1,
     title: "Urdideira Jupiter: tecnologia em operação",
-    segment: "Clientes · Preparação e tecelagem",
+    segment: "Preparação e tecelagem",
     audience: 382,
     delivered: 371,
     clicks: 47,
-    status: "Enviada",
+    status: "sent",
+    statusLabel: "SENT",
+    ctr: "12,3%",
   },
   {
     id: 2,
@@ -27,25 +29,29 @@ const campaigns = [
     audience: 624,
     delivered: 608,
     clicks: 92,
-    status: "Enviada",
+    status: "live",
+    statusLabel: "LIVE",
+    ctr: "14,7%",
   },
   {
     id: 3,
     title: "Peças, assistência e reposição",
-    segment: "Clientes · Pós-venda",
+    segment: "Pós-venda",
     audience: 196,
     delivered: 191,
     clicks: 31,
-    status: "Enviada",
+    status: "sent",
+    statusLabel: "SENT",
+    ctr: "15,8%",
   },
 ];
 
 const contacts = [
-  ["Tecelagem Horizonte", "Cliente", "Máquinas circulares", "Americana · SP", "Ativo"],
-  ["Malharia Santa Clara", "Prospect", "Peças e reposição", "Brusque · SC", "Oportunidade"],
-  ["Fiação Industrial Sul", "Cliente", "Assistência técnica", "Blumenau · SC", "Ativo"],
-  ["Têxtil Nova Era", "Prospect", "Automação", "São Paulo · SP", "Em contato"],
-  ["Confecções Aurora", "Cliente", "Componentes", "Goiânia · GO", "Ativo"],
+  ["Tecelagem Horizonte", "Cliente", "Máquinas", "Americana · SP", "Ativo", "Hoje, 10:42"],
+  ["Malharia Santa Clara", "Prospect", "Peças", "Brusque · SC", "Oportunidade", "Hoje, 10:18"],
+  ["Fiação Industrial Sul", "Cliente", "Assistência", "Blumenau · SC", "Ativo", "Ontem"],
+  ["Têxtil Nova Era", "Prospect", "Máquinas", "São Paulo · SP", "Em contato", "Ontem"],
+  ["Confecções Aurora", "Cliente", "Componentes", "Goiânia · GO", "Ativo", "22 set"],
 ];
 
 const conversations = [
@@ -75,10 +81,29 @@ const conversations = [
   },
 ];
 
+const activity = [
+  ["11:31", "Malharia Santa Clara abriu campanha", "Interesse detectado em peças e reposição", "E-MAIL"],
+  ["11:27", "Nova conversa recebida", "Solicitação comercial direcionada para atendimento prioritário", "WHATSAPP"],
+  ["11:18", "Têxtil Nova Era clicou em equipamento", "Contato marcado para acompanhamento comercial", "SINAL"],
+  ["10:54", "Campanha entregue", "Novo lote de mensagens aceito pelo provedor", "E-MAIL"],
+  ["10:41", "Contato atualizado", "Interesse principal alterado para máquinas", "CRM"],
+];
+
+const signals = [
+  ["Máquinas", 42],
+  ["Peças", 31],
+  ["Assistência", 17],
+  ["Outros", 10],
+];
+
+function Status({ kind = "neutral", children }) {
+  return <span className={"terminal-status " + kind}>{children}</span>;
+}
+
 function Metric({ label, value, helper }) {
   return (
-    <div className="metric-card">
-      <span className="metric-label">{label}</span>
+    <div className="metric-strip-item">
+      <span>{label}</span>
       <strong>{value}</strong>
       <small>{helper}</small>
     </div>
@@ -88,80 +113,147 @@ function Metric({ label, value, helper }) {
 function Overview({ setSection }) {
   return (
     <>
-      <section className="hero-panel">
-        <div>
-          <span className="eyebrow">Relacionamento comercial</span>
-          <h1>Visão consolidada dos canais da Texfield.</h1>
-          <p>
-            E-mail, contatos, interações e atendimento em um ambiente criado para acompanhar
-            relacionamento e oportunidades sem depender de ferramentas isoladas.
-          </p>
-        </div>
-        <button className="primary-button" onClick={() => setSection("email")}>
-          Ver campanhas
-        </button>
+      <section className="metric-strip">
+        <Metric label="Base ativa" value="1.248" helper="+36 nos últimos 30 dias" />
+        <Metric label="Entregabilidade" value="96,8%" helper="canal de e-mail" />
+        <Metric label="Interações" value="170" helper="cliques registrados" />
+        <Metric label="Sinais comerciais" value="18" helper="para acompanhamento" />
       </section>
 
-      <section className="metrics-grid">
-        <Metric label="Contatos" value="1.248" helper="+36 nos últimos 30 dias" />
-        <Metric label="Entregabilidade" value="96,8%" helper="nas campanhas recentes" />
-        <Metric label="Cliques" value="170" helper="interações mensuráveis" />
-        <Metric label="Oportunidades" value="18" helper="sinalizadas para acompanhamento" />
-      </section>
-
-      <section className="content-grid">
-        <div className="panel panel-large">
-          <div className="panel-heading">
+      <section className="terminal-grid overview-grid">
+        <div className="terminal-panel panel-campaigns">
+          <div className="terminal-section-head">
             <div>
-              <span className="eyebrow">E-mail</span>
-              <h2>Campanhas recentes</h2>
+              <span>Campanhas / operação</span>
+              <small>últimos 30 dias</small>
             </div>
-            <button className="text-button" onClick={() => setSection("email")}>Ver todas</button>
+            <button className="terminal-link" onClick={() => setSection("email")}>
+              abrir e-mail →
+            </button>
           </div>
-          <div className="campaign-list">
-            {campaigns.map((campaign) => (
-              <div className="campaign-row" key={campaign.id}>
+
+          <div className="terminal-table-wrap">
+            <table className="terminal-table campaign-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Campanha</th>
+                  <th>Público</th>
+                  <th className="align-right">Base</th>
+                  <th className="align-right">Entrega</th>
+                  <th className="align-right">CTR</th>
+                </tr>
+              </thead>
+              <tbody>
+                {campaigns.map((campaign) => (
+                  <tr key={campaign.id}>
+                    <td>
+                      <Status kind={campaign.status === "live" ? "live" : "sent"}>
+                        {campaign.status === "live" ? "● " : "✓ "}
+                        {campaign.statusLabel}
+                      </Status>
+                    </td>
+                    <td>
+                      <strong>{campaign.title}</strong>
+                    </td>
+                    <td className="muted-cell">{campaign.segment}</td>
+                    <td className="align-right">{campaign.audience}</td>
+                    <td className="align-right">
+                      {((campaign.delivered / campaign.audience) * 100).toFixed(1)}%
+                    </td>
+                    <td className="align-right">{campaign.ctr}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="terminal-section-head secondary">
+            <div>
+              <span>Atividade em tempo real</span>
+              <small>stream comercial demonstrativo</small>
+            </div>
+          </div>
+
+          <div className="activity-stream">
+            {activity.map(([time, title, description, channel]) => (
+              <div className="activity-row" key={time + title}>
+                <time>{time}</time>
                 <div>
-                  <strong>{campaign.title}</strong>
-                  <span>{campaign.segment}</span>
+                  <strong>{title}</strong>
+                  <span>{description}</span>
                 </div>
-                <div className="campaign-stat">
-                  <small>Entregues</small>
-                  <b>{campaign.delivered}</b>
-                </div>
-                <div className="campaign-stat">
-                  <small>Cliques</small>
-                  <b>{campaign.clicks}</b>
-                </div>
-                <span className="status success">{campaign.status}</span>
+                <Status>{channel}</Status>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-heading">
+        <aside className="terminal-panel panel-signals">
+          <div className="terminal-section-head">
             <div>
-              <span className="eyebrow">WhatsApp</span>
-              <h2>Atendimento prioritário</h2>
+              <span>Sinais de interesse</span>
+              <small>distribuição demonstrativa</small>
             </div>
           </div>
-          <div className="priority-stack">
-            <div className="priority-item">
-              <span className="priority-dot high" />
-              <div><strong>2 oportunidades comerciais</strong><small>pedem acompanhamento</small></div>
-            </div>
-            <div className="priority-item">
-              <span className="priority-dot" />
-              <div><strong>7 conversas abertas</strong><small>na fila de atendimento</small></div>
-            </div>
-            <div className="priority-item">
-              <span className="priority-dot" />
-              <div><strong>1 atendimento técnico</strong><small>aguardando retorno</small></div>
+
+          <div className="signal-list">
+            {signals.map(([label, value]) => (
+              <div className="signal-row" key={label}>
+                <div className="signal-row-top">
+                  <span>{label}</span>
+                  <b>{value}%</b>
+                </div>
+                <div className="signal-track">
+                  <div className="signal-fill" style={{ width: value + "%" }} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="terminal-section-head secondary">
+            <div>
+              <span>Atendimento</span>
+              <small>agora</small>
             </div>
           </div>
-          <button className="secondary-button full" onClick={() => setSection("whatsapp")}>
-            Abrir atendimento
+
+          <div className="ops-list">
+            <button onClick={() => setSection("whatsapp")}>
+              <strong>02</strong>
+              <span>Prioridade alta</span>
+              <small>oportunidades comerciais</small>
+            </button>
+            <button onClick={() => setSection("whatsapp")}>
+              <strong>07</strong>
+              <span>Conversas abertas</span>
+              <small>fila de relacionamento</small>
+            </button>
+            <button onClick={() => setSection("whatsapp")}>
+              <strong>01</strong>
+              <span>Atendimento técnico</span>
+              <small>aguardando retorno</small>
+            </button>
+          </div>
+        </aside>
+      </section>
+
+      <section className="industrial-feature">
+        <div className="industrial-visual" aria-hidden="true">
+          <div className="machine-grid" />
+          <div className="machine-axis axis-one" />
+          <div className="machine-axis axis-two" />
+          <div className="machine-axis axis-three" />
+        </div>
+        <div className="industrial-copy">
+          <span className="terminal-kicker">Conteúdo em destaque</span>
+          <h2>Máquinas, peças e oportunidades podem virar relacionamento mensurável.</h2>
+          <p>
+            A mesma operação que informa o mercado registra interesse, organiza contatos
+            e entrega contexto para o time comercial.
+          </p>
+          <button className="terminal-action" onClick={() => setSection("email")}>
+            Ver campanha em operação
           </button>
         </div>
       </section>
@@ -234,170 +326,196 @@ function EmailSection() {
     }
   }
 
-  function focusDemoSend() {
-    document.getElementById("demo-recipient")?.focus();
-  }
-
   return (
-    <section className="split-view">
-      <div className="panel">
-        <div className="panel-heading">
+    <section className="terminal-grid email-command-grid">
+      <aside className="terminal-panel email-campaign-list">
+        <div className="terminal-section-head">
           <div>
-            <span className="eyebrow">Campanhas</span>
-            <h2>E-mails enviados</h2>
+            <span>Campanhas</span>
+            <small>operação de e-mail</small>
           </div>
-          <button className="primary-button small" onClick={focusDemoSend}>
-            Enviar demonstração
-          </button>
         </div>
 
-        <div className="email-engine-strip">
-          <span className={"engine-dot " + (engine?.mode === "live" ? "live" : "")} />
+        <div className="engine-line">
+          <span className={"engine-light " + (engine?.mode === "live" ? "live" : "")} />
           <div>
-            <strong>
-              Motor de e-mail · {engine?.mode === "live" ? "envio habilitado" : "modo preview"}
-            </strong>
+            <strong>{engine?.mode === "live" ? "ENVIO HABILITADO" : "MODO PREVIEW"}</strong>
             <small>
               {engine?.mode === "live"
-                ? "Envios reais são limitados a endereços autorizados."
-                : "O fluxo pode ser testado sem disparar mensagens reais."}
+                ? "disparos reais limitados à allowlist"
+                : "nenhuma mensagem real é enviada"}
             </small>
           </div>
         </div>
 
-        <div className="campaign-list">
+        <div className="campaign-terminal-list">
           {campaigns.map((campaign) => (
             <button
-              className={"campaign-row campaign-button " + (selected.id === campaign.id ? "selected" : "")}
+              className={selected.id === campaign.id ? "active" : ""}
               key={campaign.id}
               onClick={() => setSelected(campaign)}
             >
-              <div>
-                <strong>{campaign.title}</strong>
-                <span>{campaign.segment}</span>
+              <div className="campaign-terminal-top">
+                <Status kind={campaign.status === "live" ? "live" : "sent"}>
+                  {campaign.statusLabel}
+                </Status>
+                <span>{campaign.ctr} CTR</span>
               </div>
-              <span className="status success">{campaign.status}</span>
+              <strong>{campaign.title}</strong>
+              <small>{campaign.segment}</small>
             </button>
           ))}
         </div>
+      </aside>
 
-        <form className="demo-send-card" onSubmit={handleDemoSend}>
+      <div className="terminal-panel email-preview-panel">
+        <div className="terminal-section-head">
           <div>
-            <span className="eyebrow">Teste controlado</span>
-            <h3>Receber esta demonstração por e-mail</h3>
-            <p>
-              Informe um endereço para validar o fluxo. Em modo live, o sistema
-              só envia para destinatários previamente autorizados.
-            </p>
+            <span>Conteúdo da campanha</span>
+            <small>{selected.title}</small>
           </div>
+          <Status kind="sent">PREVIEW</Status>
+        </div>
 
-          <div className="demo-send-form">
-            <input
-              id="demo-recipient"
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              placeholder="nome@empresa.com.br"
-              value={recipient}
-              onChange={(event) => setRecipient(event.target.value)}
-              required
-            />
-            <button
-              className="primary-button"
-              type="submit"
-              disabled={delivery.status === "loading"}
-            >
-              {delivery.status === "loading" ? "Processando..." : "Enviar teste"}
-            </button>
+        <div className="email-performance-strip">
+          <div><span>Base</span><strong>{selected.audience}</strong></div>
+          <div><span>Entregues</span><strong>{selected.delivered}</strong></div>
+          <div><span>Cliques</span><strong>{selected.clicks}</strong></div>
+          <div><span>CTR</span><strong>{selected.ctr}</strong></div>
+        </div>
+
+        <div className="email-editorial-preview">
+          <div className="email-preview-rail">
+            <span>TEXFIELD</span>
+            <small>INFORMAÇÃO · TECNOLOGIA · INDÚSTRIA</small>
           </div>
-
-          {delivery.status !== "idle" && (
-            <div
-              className={
-                "delivery-result " +
-                (delivery.status === "error"
-                  ? "error"
-                  : delivery.delivered
-                    ? "delivered"
-                    : "preview")
-              }
-              role="status"
-            >
-              <strong>
-                {delivery.status === "error"
-                  ? "Envio não concluído"
-                  : delivery.delivered
-                    ? "Mensagem enviada"
-                    : "Preview validado"}
-              </strong>
-              <span>{delivery.message}</span>
-              {delivery.messageId && (
-                <small>Referência: {delivery.messageId}</small>
-              )}
-            </div>
-          )}
-        </form>
-      </div>
-
-      <div className="panel email-preview">
-        <div className="panel-heading">
-          <div>
-            <span className="eyebrow">Detalhes da campanha</span>
+          <div className="email-preview-body">
+            <span className="terminal-kicker">Relacionamento comercial</span>
             <h2>{selected.title}</h2>
+            <p>
+              Máquinas, componentes, assistência e tecnologia para apoiar a operação
+              industrial e manter o relacionamento comercial ativo.
+            </p>
+            <button type="button">Conhecer solução</button>
+          </div>
+        </div>
+      </div>
+
+      <aside className="terminal-panel email-distribution-panel">
+        <div className="terminal-section-head">
+          <div>
+            <span>Distribuição</span>
+            <small>teste controlado</small>
           </div>
         </div>
 
-        <div className="email-metrics">
-          <Metric label="Enviados" value={selected.audience} helper="destinatários" />
-          <Metric label="Entregues" value={selected.delivered} helper="mensagens aceitas" />
-          <Metric label="Cliques" value={selected.clicks} helper="interações registradas" />
+        <form className="terminal-form" onSubmit={handleDemoSend}>
+          <label htmlFor="demo-recipient">Destinatário de teste</label>
+          <input
+            id="demo-recipient"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="nome@empresa.com.br"
+            value={recipient}
+            onChange={(event) => setRecipient(event.target.value)}
+            required
+          />
+          <button
+            className="terminal-action"
+            type="submit"
+            disabled={delivery.status === "loading"}
+          >
+            {delivery.status === "loading" ? "PROCESSANDO..." : "ENVIAR DEMONSTRAÇÃO"}
+          </button>
+        </form>
+
+        <div className="distribution-note">
+          <strong>CONTROLE DE SEGURANÇA</strong>
+          <p>
+            Em modo live, somente endereços previamente autorizados podem receber a
+            demonstração.
+          </p>
         </div>
 
-        <div className="email-frame">
-          <div className="email-brand">TEXFIELD</div>
-          <span className="email-kicker">SOLUÇÕES PARA A INDÚSTRIA TÊXTIL</span>
-          <h3>{selected.title}</h3>
-          <p>
-            Máquinas, componentes, assistência e tecnologia para apoiar a
-            operação industrial e manter o relacionamento comercial ativo.
-          </p>
-          <button className="email-cta" type="button">Falar com a Texfield</button>
-          <small>Exemplo visual para demonstração comercial.</small>
-        </div>
-      </div>
+        {delivery.status !== "idle" && (
+          <div
+            className={
+              "terminal-message " +
+              (delivery.status === "error"
+                ? "error"
+                : delivery.delivered
+                  ? "success"
+                  : "preview")
+            }
+            role="status"
+          >
+            <strong>
+              {delivery.status === "error"
+                ? "ENVIO NÃO CONCLUÍDO"
+                : delivery.delivered
+                  ? "MENSAGEM ENVIADA"
+                  : "PREVIEW VALIDADO"}
+            </strong>
+            <span>{delivery.message}</span>
+            {delivery.messageId && <small>{delivery.messageId}</small>}
+          </div>
+        )}
+      </aside>
     </section>
   );
 }
 
 function ContactsSection() {
   return (
-    <section className="panel">
-      <div className="panel-heading">
+    <section className="terminal-panel full-terminal">
+      <div className="terminal-section-head">
         <div>
-          <span className="eyebrow">Base de relacionamento</span>
-          <h2>Contatos e segmentação</h2>
+          <span>Base de relacionamento</span>
+          <small>contatos, perfil e interesse</small>
         </div>
-        <button className="primary-button small">Adicionar contato</button>
+        <Status>1.248 REGISTROS</Status>
       </div>
 
-      <div className="filters">
-        <span className="filter active">Todos · 1.248</span>
-        <span className="filter">Clientes · 786</span>
-        <span className="filter">Prospects · 312</span>
-        <span className="filter">Parceiros · 150</span>
+      <div className="filter-line">
+        <button className="active">TODOS · 1.248</button>
+        <button>CLIENTES · 786</button>
+        <button>PROSPECTS · 312</button>
+        <button>PARCEIROS · 150</button>
       </div>
 
-      <div className="data-table">
-        <div className="table-row table-head">
-          <span>Empresa</span><span>Tipo</span><span>Interesse</span><span>Região</span><span>Status</span>
-        </div>
-        {contacts.map((contact) => (
-          <div className="table-row" key={contact[0]}>
-            {contact.map((cell, index) => (
-              <span key={cell} className={index === 4 ? "status neutral" : ""}>{cell}</span>
+      <div className="terminal-table-wrap">
+        <table className="terminal-table contacts-table">
+          <thead>
+            <tr>
+              <th>Empresa</th>
+              <th>Tipo</th>
+              <th>Interesse</th>
+              <th>Região</th>
+              <th>Status</th>
+              <th>Última atividade</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map((contact) => (
+              <tr key={contact[0]}>
+                <td><strong>{contact[0]}</strong></td>
+                <td>{contact[1]}</td>
+                <td>{contact[2]}</td>
+                <td className="muted-cell">{contact[3]}</td>
+                <td><Status kind={contact[4] === "Oportunidade" ? "live" : "sent"}>{contact[4]}</Status></td>
+                <td className="muted-cell">{contact[5]}</td>
+              </tr>
             ))}
-          </div>
-        ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="contact-summary-strip">
+        <div><span>Máquinas</span><strong>42%</strong></div>
+        <div><span>Peças</span><strong>31%</strong></div>
+        <div><span>Assistência</span><strong>17%</strong></div>
+        <div><span>Outros</span><strong>10%</strong></div>
       </div>
     </section>
   );
@@ -407,173 +525,252 @@ function WhatsAppSection() {
   const [selected, setSelected] = useState(conversations[0]);
 
   return (
-    <section className="whatsapp-layout">
-      <div className="panel conversation-list">
-        <div className="panel-heading">
+    <section className="whatsapp-command-grid">
+      <aside className="terminal-panel queue-panel">
+        <div className="terminal-section-head">
           <div>
-            <span className="eyebrow">WhatsApp</span>
-            <h2>Fila de atendimento</h2>
+            <span>Fila de atendimento</span>
+            <small>WhatsApp</small>
           </div>
-        </div>
-        {conversations.map((conversation) => (
-          <button
-            key={conversation.company}
-            onClick={() => setSelected(conversation)}
-            className={"conversation-item " + (selected.company === conversation.company ? "selected" : "")}
-          >
-            <div className="conversation-topline">
-              <strong>{conversation.company}</strong>
-              <small>{conversation.time}</small>
-            </div>
-            <span>{conversation.message}</span>
-            <div className="conversation-meta">
-              <small>{conversation.category}</small>
-              <small className={conversation.priority === "Alta" ? "priority-high" : ""}>
-                {conversation.priority}
-              </small>
-            </div>
-          </button>
-        ))}
-      </div>
-
-      <div className="panel chat-panel">
-        <div className="chat-header">
-          <div>
-            <strong>{selected.company}</strong>
-            <span>Cliente identificado · histórico disponível</span>
-          </div>
-          <span className="status warning">Prioridade {selected.priority}</span>
+          <Status kind="live">07 OPEN</Status>
         </div>
 
-        <div className="chat-body">
-          <div className="message incoming">{selected.message}</div>
-          <div className="system-card">
-            <span>Contexto identificado</span>
-            <strong>Categoria: {selected.category}</strong>
+        <div className="conversation-terminal-list">
+          {conversations.map((conversation) => (
+            <button
+              key={conversation.company}
+              onClick={() => setSelected(conversation)}
+              className={selected.company === conversation.company ? "active" : ""}
+            >
+              <div>
+                <strong>{conversation.company}</strong>
+                <time>{conversation.time}</time>
+              </div>
+              <span>{conversation.message}</span>
+              <div className="conversation-tags">
+                <Status>{conversation.category}</Status>
+                <Status kind={conversation.priority === "Alta" ? "live" : "neutral"}>
+                  {conversation.priority}
+                </Status>
+              </div>
+            </button>
+          ))}
+        </div>
+      </aside>
+
+      <div className="terminal-panel conversation-stage">
+        <div className="conversation-header">
+          <div>
+            <span className="terminal-kicker">CONVERSA ATIVA</span>
+            <h2>{selected.company}</h2>
+          </div>
+          <Status kind={selected.priority === "Alta" ? "live" : "sent"}>
+            PRIORIDADE {selected.priority.toUpperCase()}
+          </Status>
+        </div>
+
+        <div className="conversation-log">
+          <div className="log-entry incoming">
+            <time>{selected.time}</time>
+            <p>{selected.message}</p>
+          </div>
+
+          <div className="context-event">
+            <span>SISTEMA</span>
+            <strong>Contexto identificado · {selected.category}</strong>
             <small>Responsável sugerido: {selected.owner}</small>
           </div>
-          <div className="message outgoing">
-            Olá! Recebemos sua mensagem. Vou direcionar sua solicitação para o responsável e seguimos por aqui.
+
+          <div className="log-entry outgoing">
+            <time>10:43</time>
+            <p>
+              Olá! Recebemos sua mensagem. Vou direcionar sua solicitação ao responsável
+              e seguimos por aqui.
+            </p>
           </div>
         </div>
 
-        <div className="chat-compose">
-          <input value="Digite uma resposta..." readOnly />
-          <button>Enviar</button>
+        <div className="command-compose">
+          <input readOnly value="Digite uma resposta..." aria-label="Resposta de demonstração" />
+          <button type="button">ENVIAR</button>
         </div>
       </div>
 
-      <aside className="panel contact-context">
-        <span className="eyebrow">Contexto comercial</span>
-        <h3>{selected.company}</h3>
-        <dl>
+      <aside className="terminal-panel intelligence-panel">
+        <div className="terminal-section-head">
+          <div>
+            <span>Inteligência do contato</span>
+            <small>contexto comercial</small>
+          </div>
+        </div>
+
+        <dl className="context-list">
           <div><dt>Perfil</dt><dd>Cliente / prospect</dd></div>
           <div><dt>Interesse</dt><dd>{selected.category}</dd></div>
           <div><dt>Responsável</dt><dd>{selected.owner}</dd></div>
           <div><dt>Último e-mail</dt><dd>Novidades Texfield</dd></div>
           <div><dt>Interação</dt><dd>Clique registrado</dd></div>
         </dl>
+
+        <div className="contact-score">
+          <span>PROPENSÃO COMERCIAL</span>
+          <strong>82</strong>
+          <small>score ilustrativo</small>
+          <div><i style={{ width: "82%" }} /></div>
+        </div>
       </aside>
     </section>
   );
 }
 
 function ReportsSection() {
-  const rows = [
-    ["Entregabilidade média", "96,8%", "+1,2 p.p."],
-    ["CTR médio", "12,4%", "+2,1 p.p."],
-    ["Base ativa", "1.248", "+36"],
-    ["Descadastros", "0,7%", "-0,2 p.p."],
-  ];
+  const trend = [34, 48, 45, 62, 59, 74, 68, 82, 76, 91, 86, 96];
 
   return (
-    <section className="content-grid reports-grid">
-      <div className="panel panel-large">
-        <div className="panel-heading">
+    <section className="intelligence-layout">
+      <div className="terminal-panel intelligence-main">
+        <div className="terminal-section-head">
           <div>
-            <span className="eyebrow">Desempenho</span>
-            <h2>Indicadores do canal de e-mail</h2>
+            <span>Inteligência de relacionamento</span>
+            <small>leitura operacional da base</small>
           </div>
-          <span className="period">Últimos 30 dias</span>
+          <Status>30 DIAS</Status>
         </div>
-        <div className="report-bars">
-          {[72, 48, 84, 63, 91, 70, 78, 88].map((value, index) => (
-            <div className="bar-wrap" key={index}>
-              <div className="bar" style={{ height: value + "%" }} />
-              <small>{index + 1}</small>
-            </div>
-          ))}
+
+        <div className="intelligence-kpis">
+          <div><span>Base ativa</span><strong>1.248</strong><small>+2,9%</small></div>
+          <div><span>Entregabilidade</span><strong>96,8%</strong><small>+1,2 p.p.</small></div>
+          <div><span>CTR médio</span><strong>12,4%</strong><small>+2,1 p.p.</small></div>
+          <div><span>Descadastros</span><strong>0,7%</strong><small>-0,2 p.p.</small></div>
+        </div>
+
+        <div className="trend-chart">
+          <div className="trend-scale">
+            <span>100</span><span>75</span><span>50</span><span>25</span><span>0</span>
+          </div>
+          <div className="trend-bars">
+            {trend.map((value, index) => (
+              <div className="trend-column" key={index}>
+                <div className="trend-value" style={{ height: value + "%" }} />
+                <span>{index + 1}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="panel">
-        <span className="eyebrow">Resumo</span>
-        <h2>Métricas principais</h2>
-        <div className="report-list">
-          {rows.map((row) => (
-            <div key={row[0]}>
-              <span>{row[0]}</span>
-              <strong>{row[1]}</strong>
-              <small>{row[2]}</small>
-            </div>
-          ))}
+      <aside className="terminal-panel intelligence-side">
+        <div className="terminal-section-head">
+          <div>
+            <span>Leituras da operação</span>
+            <small>sinais demonstrativos</small>
+          </div>
         </div>
-      </div>
+
+        <div className="insight-list">
+          <div>
+            <span>01</span>
+            <div><strong>Máquinas concentram 42% do interesse recente</strong><small>maior categoria na base demonstrativa</small></div>
+          </div>
+          <div>
+            <span>02</span>
+            <div><strong>CTR médio acima das campanhas anteriores</strong><small>crescimento ilustrativo de 2,1 p.p.</small></div>
+          </div>
+          <div>
+            <span>03</span>
+            <div><strong>18 contatos pedem acompanhamento</strong><small>com base em sinais de interação</small></div>
+          </div>
+        </div>
+      </aside>
     </section>
   );
 }
 
 export default function DemoShell({ tenant }) {
   const [section, setSection] = useState("overview");
+  const [clock, setClock] = useState("");
+
+  useEffect(() => {
+    const update = () => {
+      setClock(
+        new Intl.DateTimeFormat("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }).format(new Date()),
+      );
+    };
+
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const activeLabel = useMemo(
     () => navItems.find(([key]) => key === section)?.[1] || "Visão geral",
-    [section]
+    [section],
   );
 
   return (
-    <main className="app-shell" style={{ "--accent": tenant.accent, "--accent-soft": tenant.accentSoft }}>
-      <aside className="sidebar">
-        <div className="brand-block">
-          <div className="brand-mark">{tenant.initials}</div>
+    <main className="command-shell">
+      <div className="market-ticker" aria-label="Faixa informacional demonstrativa">
+        <div className="ticker-track">
+          <span>ALGODÃO <b>MONITORAMENTO</b></span>
+          <span>USD / BRL <b>CÂMBIO</b></span>
+          <span>EUR / BRL <b>CÂMBIO</b></span>
+          <span>INDÚSTRIA TÊXTIL <b>OPORTUNIDADES</b></span>
+          <span>FEIRAS & EVENTOS <b>AGENDA 2026</b></span>
+          <span>PEÇAS & SERVIÇOS <b>RELACIONAMENTO</b></span>
+          <span>ALGODÃO <b>MONITORAMENTO</b></span>
+          <span>USD / BRL <b>CÂMBIO</b></span>
+          <span>EUR / BRL <b>CÂMBIO</b></span>
+          <span>INDÚSTRIA TÊXTIL <b>OPORTUNIDADES</b></span>
+        </div>
+      </div>
+
+      <header className="command-header">
+        <div className="command-brand">
+          <div className="command-logo">TX</div>
           <div>
             <strong>{tenant.brand}</strong>
-            <span>{tenant.productName}</span>
+            <span>RELATIONSHIP INTELLIGENCE / COMMAND CENTER</span>
           </div>
         </div>
 
-        <nav>
+        <div className="command-status">
+          <span><i /> SISTEMA ONLINE</span>
+          <b>{clock || "--:--:--"}</b>
+          <small>AMBIENTE DEMONSTRATIVO · DADOS ILUSTRATIVOS</small>
+        </div>
+      </header>
+
+      <nav className="command-nav" aria-label="Navegação principal">
+        <div className="command-nav-inner">
           {navItems.map(([key, label]) => (
-            <button key={key} className={section === key ? "active" : ""} onClick={() => setSection(key)}>
-              <span className="nav-dot" />
+            <button
+              key={key}
+              className={section === key ? "active" : ""}
+              onClick={() => setSection(key)}
+            >
               {label}
             </button>
           ))}
-        </nav>
-
-        <div className="sidebar-footer">
-          <span>Proxy Technology</span>
-          <small>Relationship Platform</small>
         </div>
-      </aside>
+        <span className="current-view">{activeLabel.toUpperCase()}</span>
+      </nav>
 
-      <div className="main-area">
-        <header className="topbar">
-          <div>
-            <span className="breadcrumb">Texfield / {activeLabel}</span>
-            <strong>{tenant.subtitle}</strong>
-          </div>
-          <span className="demo-badge">{tenant.demoLabel}</span>
-        </header>
-
-        <div className="page-content">
-          {section === "overview" && <Overview setSection={setSection} />}
-          {section === "email" && <EmailSection />}
-          {section === "contacts" && <ContactsSection />}
-          {section === "whatsapp" && <WhatsAppSection />}
-          {section === "reports" && <ReportsSection />}
-        </div>
+      <div className="command-content">
+        {section === "overview" && <Overview setSection={setSection} />}
+        {section === "email" && <EmailSection />}
+        {section === "contacts" && <ContactsSection />}
+        {section === "whatsapp" && <WhatsAppSection />}
+        {section === "reports" && <ReportsSection />}
       </div>
+
+      <footer className="command-footer">
+        <span>PROXY TECHNOLOGY · RELATIONSHIP PLATFORM</span>
+        <span>TENANT / TEXFIELD</span>
+      </footer>
     </main>
   );
 }
