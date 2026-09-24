@@ -41,3 +41,32 @@ Nesta primeira etapa não existe banco de dados. Os dados são demonstrativos e 
 5. registrar eventos de entrega e clique;
 6. adicionar Neon quando a demonstração precisar persistir campanhas, contatos e eventos;
 7. integrar WhatsApp apenas na camada operacional seguinte.
+
+
+## Demonstração de e-mail
+
+O módulo de e-mail possui dois modos:
+
+- `preview`: valida interface, payload e template sem enviar mensagens;
+- `live`: envia uma mensagem transacional de demonstração pelo provider configurado.
+
+O primeiro provider implementado é a Brevo, seguindo o padrão já homologado no projeto Eduardo Brasil. A interface, porém, não depende diretamente da Brevo.
+
+Por segurança, o modo `live` só envia para endereços presentes em `DEMO_ALLOWED_RECIPIENTS`. Isso impede que um ambiente público de demonstração seja usado para disparos arbitrários.
+
+Configuração:
+
+```env
+EMAIL_DELIVERY_MODE=preview
+EMAIL_PROVIDER=brevo
+DEMO_ALLOWED_RECIPIENTS=
+BREVO_API_KEY=
+BREVO_SENDER_NAME=Texfield
+BREVO_SENDER_EMAIL=
+BREVO_REPLY_TO=
+TEXFIELD_DEMO_CTA_URL=https://texfield.com.br
+```
+
+As credenciais são exclusivamente server-side. Nenhuma chave de provider é exposta ao navegador.
+
+Nesta fase, campanhas, contatos e métricas comerciais continuam demonstrativos. O próximo passo de persistência será feito em Neon quando houver necessidade de armazenar tenants, campanhas, contatos ou eventos.
