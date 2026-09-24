@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const navItems = [
   ["overview", "Visão geral"],
@@ -13,8 +13,8 @@ const navItems = [
 const campaigns = [
   {
     id: 1,
-    title: "Peças para máquinas circulares",
-    segment: "Clientes · Máquinas circulares",
+    title: "Urdideira Jupiter: tecnologia em operação",
+    segment: "Clientes · Preparação e tecelagem",
     audience: 382,
     delivered: 371,
     clicks: 47,
@@ -31,7 +31,7 @@ const campaigns = [
   },
   {
     id: 3,
-    title: "Atendimento técnico e reposição",
+    title: "Peças, assistência e reposição",
     segment: "Clientes · Pós-venda",
     audience: 196,
     delivered: 191,
@@ -171,6 +171,72 @@ function Overview({ setSection }) {
 
 function EmailSection() {
   const [selected, setSelected] = useState(campaigns[1]);
+  const [recipient, setRecipient] = useState("");
+  const [engine, setEngine] = useState(null);
+  const [delivery, setDelivery] = useState({
+    status: "idle",
+    message: "",
+    delivered: false,
+  });
+
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/email/test-send", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (active) setEngine(data);
+      })
+      .catch(() => {
+        if (active) setEngine(null);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  async function handleDemoSend(event) {
+    event.preventDefault();
+
+    setDelivery({
+      status: "loading",
+      message: "Validando envio...",
+      delivered: false,
+    });
+
+    try {
+      const response = await fetch("/api/email/test-send", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ recipient }),
+      });
+
+      const data = await response.json();
+
+      setDelivery({
+        status: response.ok ? "success" : "error",
+        message:
+          data?.message ||
+          (response.ok
+            ? "Demonstração processada."
+            : "Não foi possível processar o envio."),
+        delivered: Boolean(data?.delivered),
+        mode: data?.mode || engine?.mode || "preview",
+        messageId: data?.messageId || null,
+      });
+    } catch {
+      setDelivery({
+        status: "error",
+        message: "Não foi possível conectar ao serviço de envio.",
+        delivered: false,
+      });
+    }
+  }
+
+  function focusDemoSend() {
+    document.getElementById("demo-recipient")?.focus();
+  }
 
   return (
     <section className="split-view">
@@ -180,8 +246,25 @@ function EmailSection() {
             <span className="eyebrow">Campanhas</span>
             <h2>E-mails enviados</h2>
           </div>
-          <button className="primary-button small">Nova campanha</button>
+          <button className="primary-button small" onClick={focusDemoSend}>
+            Enviar demonstração
+          </button>
         </div>
+
+        <div className="email-engine-strip">
+          <span className={"engine-dot " + (engine?.mode === "live" ? "live" : "")} />
+          <div>
+            <strong>
+              Motor de e-mail · {engine?.mode === "live" ? "envio habilitado" : "modo preview"}
+            </strong>
+            <small>
+              {engine?.mode === "live"
+                ? "Envios reais são limitados a endereços autorizados."
+                : "O fluxo pode ser testado sem disparar mensagens reais."}
+            </small>
+          </div>
+        </div>
+
         <div className="campaign-list">
           {campaigns.map((campaign) => (
             <button
@@ -197,6 +280,63 @@ function EmailSection() {
             </button>
           ))}
         </div>
+
+        <form className="demo-send-card" onSubmit={handleDemoSend}>
+          <div>
+            <span className="eyebrow">Teste controlado</span>
+            <h3>Receber esta demonstração por e-mail</h3>
+            <p>
+              Informe um endereço para validar o fluxo. Em modo live, o sistema
+              só envia para destinatários previamente autorizados.
+            </p>
+          </div>
+
+          <div className="demo-send-form">
+            <input
+              id="demo-recipient"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="nome@empresa.com.br"
+              value={recipient}
+              onChange={(event) => setRecipient(event.target.value)}
+              required
+            />
+            <button
+              className="primary-button"
+              type="submit"
+              disabled={delivery.status === "loading"}
+            >
+              {delivery.status === "loading" ? "Processando..." : "Enviar teste"}
+            </button>
+          </div>
+
+          {delivery.status !== "idle" && (
+            <div
+              className={
+                "delivery-result " +
+                (delivery.status === "error"
+                  ? "error"
+                  : delivery.delivered
+                    ? "delivered"
+                    : "preview")
+              }
+              role="status"
+            >
+              <strong>
+                {delivery.status === "error"
+                  ? "Envio não concluído"
+                  : delivery.delivered
+                    ? "Mensagem enviada"
+                    : "Preview validado"}
+              </strong>
+              <span>{delivery.message}</span>
+              {delivery.messageId && (
+                <small>Referência: {delivery.messageId}</small>
+              )}
+            </div>
+          )}
+        </form>
       </div>
 
       <div className="panel email-preview">
@@ -218,10 +358,10 @@ function EmailSection() {
           <span className="email-kicker">SOLUÇÕES PARA A INDÚSTRIA TÊXTIL</span>
           <h3>{selected.title}</h3>
           <p>
-            Máquinas, componentes e suporte comercial para manter a operação produtiva com
-            acesso direto à equipe Texfield.
+            Máquinas, componentes, assistência e tecnologia para apoiar a
+            operação industrial e manter o relacionamento comercial ativo.
           </p>
-          <button className="email-cta">Falar com a Texfield</button>
+          <button className="email-cta" type="button">Falar com a Texfield</button>
           <small>Exemplo visual para demonstração comercial.</small>
         </div>
       </div>
