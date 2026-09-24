@@ -977,6 +977,15 @@ function ReportsSection() {
   const [distributionState, setDistributionState] = useState("");
   const [selectedChannel, setSelectedChannel] = useState("email");
   const [visualIndex, setVisualIndex] = useState(0);
+  const [imageEngine, setImageEngine] = useState(null);
+  const [imageGeneration, setImageGeneration] = useState({
+    status: "idle",
+    imageUrl: null,
+    assetId: null,
+    prompt: null,
+    message: "",
+    mode: "preview",
+  });
 
   const selectedTopic =
     radarTopics.find((topic) => topic.id === selectedTopicId) || radarTopics[0];
@@ -989,6 +998,34 @@ function ReportsSection() {
 
   const activeVisual = visualSet[visualIndex % visualSet.length];
 
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/editorial/generate-image", { cache: "no-store" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (active) setImageEngine(data);
+      })
+      .catch(() => {
+        if (active) setImageEngine(null);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  function resetImageGeneration() {
+    setImageGeneration({
+      status: "idle",
+      imageUrl: null,
+      assetId: null,
+      prompt: null,
+      message: "",
+      mode: imageEngine?.mode || "preview",
+    });
+  }
+
   function selectTopic(topicId) {
     setSelectedTopicId(topicId);
     setWorkspaceOpen(false);
@@ -996,6 +1033,7 @@ function ReportsSection() {
     setDistributionState("");
     setSelectedChannel("email");
     setVisualIndex(0);
+    resetImageGeneration();
   }
 
   function openWorkspace() {
@@ -1004,6 +1042,7 @@ function ReportsSection() {
     setDistributionState("");
     setSelectedChannel("email");
     setVisualIndex(0);
+    resetImageGeneration();
   }
 
   function deriveChannel(channel) {
@@ -1017,8 +1056,62 @@ function ReportsSection() {
     );
   }
 
-  function cycleVisual() {
-    setVisualIndex((current) => (current + 1) % visualSet.length);
+  function chooseVisual(index) {
+    setVisualIndex(index);
+    resetImageGeneration();
+  }
+
+  async function generateVisualImage() {
+    setImageGeneration((current) => ({
+      ...current,
+      status: "loading",
+      message:
+        imageEngine?.mode === "live"
+          ? "Gerando imagem com base no contexto editorial..."
+          : "Validando prompt visual...",
+    }));
+
+    try {
+      const response = await fetch("/api/editorial/generate-image", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          topicSlug: selectedTopic.id,
+          topicTitle: selectedTopic.title,
+          topicSummary: selectedTopic.summary,
+          topicAngle: selectedTopic.angle,
+          articleTitle: selectedTopic.articleTitle,
+          articleObjective: selectedTopic.objective,
+          visualDirection: activeVisual.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data?.message || "Não foi possível gerar o ativo visual.",
+        );
+      }
+
+      setImageGeneration({
+        status: "success",
+        imageUrl: data?.imageUrl || null,
+        assetId: data?.assetId || null,
+        prompt: data?.prompt || activeVisual.prompt,
+        message: data?.message || "Ativo visual processado.",
+        mode: data?.mode || imageEngine?.mode || "preview",
+      });
+    } catch (error) {
+      setImageGeneration((current) => ({
+        ...current,
+        status: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível gerar o ativo visual.",
+      }));
+    }
   }
 
   return (
