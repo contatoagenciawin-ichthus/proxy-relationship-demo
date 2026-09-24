@@ -37,12 +37,12 @@ function liveConfig() {
   const missing = [];
 
   if (!process.env.OPENAI_API_KEY?.trim()) missing.push("OPENAI_API_KEY");
-  if (!process.env.BLOB_READ_WRITE_TOKEN?.trim()) missing.push("BLOB_READ_WRITE_TOKEN");
-  if (!process.env.DATABASE_URL?.trim()) missing.push("DATABASE_URL");
 
   return {
     configured: missing.length === 0,
     missing,
+    storageConfigured: Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim()),
+    databaseConfigured: Boolean(process.env.DATABASE_URL?.trim()),
   };
 }
 
@@ -92,7 +92,8 @@ export async function GET() {
       "gpt-image-2.5-flare",
     liveConfigured: config.configured,
     databaseConfigured: hasEditorialDatabase(),
-    storage: "vercel-blob",
+    storageConfigured: config.storageConfigured,
+    storage: config.storageConfigured ? "vercel-blob" : "inline",
   });
 }
 
@@ -156,84 +157,116 @@ export async function POST(request) {
     ),
   );
 
-  const count = await countRecentImageGenerations({
-    tenantKey: payload.tenantKey,
-    minutes: 60,
-  });
+  if (config.databaseConfigured) {
+    const count = await countRecentImageGenerations({
+      tenantKey: payload.tenantKey,
+      minutes: 60,
+    });
 
-  if (count >= hourlyLimit) {
-    return NextResponse.json(
-      {
-        ok: false,
-        mode: "live",
-        generated: false,
-        message:
-          "O limite de geração desta demonstração foi atingido. Tente novamente mais tarde.",
-      },
-      { status: 429 },
-    );
+    if (count >= hourlyLimit) {
+      return NextResponse.json(
+        {
+          ok: false,
+          mode: "live",
+          generated: false,
+          message:
+            "O limite de geração desta demonstração foi atingido. Tente novamente mais tarde.",
+        },
+        { status: 429 },
+      );
+    }
   }
 
   let topicId = null;
 
   try {
-    topicId = await upsertEditorialTopic(payload);
+    if (config.databaseConfigured) {
+      topicId = await upsertEditorialTopic(payload);
+    }
 
     const result = await generateEditorialImage({ prompt });
     const assetId = crypto.randomUUID();
 
-    const stored = await storeEditorialImage({
-      tenantKey: payload.tenantKey,
-      topicSlug: payload.topicSlug,
-      assetId,
-      bytes: result.bytes,
-      outputFormat: result.outputFormat,
-    });
+    let imageUrl;
+    let storageKey = null;
+    let persisted = false;
 
-    await insertEditorialAsset({
-      assetId,
-      tenantKey: payload.tenantKey,
-      topicId,
-      topicSlug: payload.topicSlug,
-      visualDirection: payload.visualDirection,
-      prompt,
-      imageUrl: stored.url,
-      storageKey: stored.pathname,
-      model: result.model,
-      size: result.size,
-      quality: result.quality,
-      outputFormat: result.outputFormat,
-    });
-
-    await logEditorialGeneration({
-      tenantKey: payload.tenantKey,
-      topicId,
-      action: "generate_image",
-      success: true,
-      input: {
+    if (config.storageConfigured) {
+      const stored = await storeEditorialImage({
+        tenantKey: payload.tenantKey,
         topicSlug: payload.topicSlug,
-        visualDirection: payload.visualDirection,
-      },
-      output: {
         assetId,
-        model: result.model,
-        size: result.size,
-        quality: result.quality,
-      },
-    });
+        bytes: result.bytes,
+        outputFormat: result.outputFormat,
+      });
+
+      imageUrl = stored.url;
+      storageKey = stored.pathname;
+
+      if (config.databaseConfigured) {
+        await insertEditorialAsset({
+          assetId,
+          tenantKey: payload.tenantKey,
+          topicId,
+          topicSlug: payload.topicSlug,
+          visualDirection: payload.visualDirection,
+          prompt,
+          imageUrl,
+          storageKey,
+          model: result.model,
+          size: result.size,
+          quality: result.quality,
+          outputFormat: result.outputFormat,
+        });
+        persisted = true;
+      }
+    } else {
+      const mime =
+        result.outputFormat === "jpeg"
+          ? "image/jpeg"
+          : result.outputFormat === "webp"
+            ? "image/webp"
+            : "image/png";
+      imageUrl = `data:${mime};base64,${result.bytes.toString("base64")}`;
+    }
+
+    if (config.databaseConfigured) {
+      await logEditorialGeneration({
+        tenantKey: payload.tenantKey,
+        topicId,
+        action: "generate_image",
+        success: true,
+        input: {
+          topicSlug: payload.topicSlug,
+          visualDirection: payload.visualDirection,
+        },
+        output: {
+          assetId,
+          model: result.model,
+          size: result.size,
+          quality: result.quality,
+          storage: config.storageConfigured ? "vercel-blob" : "inline",
+          persisted,
+        },
+      });
+    }
 
     return NextResponse.json({
       ok: true,
       mode: "live",
       generated: true,
       assetId,
-      imageUrl: stored.url,
+      imageUrl,
       visualDirection: payload.visualDirection,
       prompt,
       model: result.model,
       size: result.size,
       quality: result.quality,
-      message: "Imagem gerada e salva.",
+      persisted,
+      storage: config.storageConfigured ? "vercel-blob" : "inline",
+      message: persisted
+        ? "Imagem gerada e salva."
+        : "Imagem gerada para esta sessão.",
     });
   } catch (error) {
     const message =
