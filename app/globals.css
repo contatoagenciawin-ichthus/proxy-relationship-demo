@@ -737,3 +737,145 @@ button { cursor: pointer; }
   .email-frame { padding: 26px; }
   .email-frame h3 { font-size: 28px; }
 }
+
+
+.email-engine-strip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  margin: -4px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #f8fafb;
+}
+
+.email-engine-strip strong,
+.email-engine-strip small {
+  display: block;
+}
+
+.email-engine-strip strong {
+  font-size: 11px;
+}
+
+.email-engine-strip small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.engine-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  margin-top: 3px;
+  border-radius: 50%;
+  background: #9ba7b0;
+  box-shadow: 0 0 0 4px #edf1f4;
+}
+
+.engine-dot.live {
+  background: var(--success);
+  box-shadow: 0 0 0 4px #e8f4ee;
+}
+
+.demo-send-card {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #f8fafb, #ffffff);
+}
+
+.demo-send-card h3 {
+  margin: 5px 0 7px;
+  font-size: 15px;
+}
+
+.demo-send-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.demo-send-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.demo-send-form input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dce2e7;
+  border-radius: 10px;
+  padding: 11px 12px;
+  outline: none;
+  background: #fff;
+  color: var(--text);
+}
+
+.demo-send-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.demo-send-form button:disabled {
+  cursor: wait;
+  opacity: .65;
+}
+
+.delivery-result {
+  display: grid;
+  gap: 3px;
+  margin-top: 12px;
+  padding: 11px 12px;
+  border-radius: 9px;
+  font-size: 11px;
+}
+
+.delivery-result strong,
+.delivery-result span,
+.delivery-result small {
+  display: block;
+}
+
+.delivery-result span,
+.delivery-result small {
+  line-height: 1.45;
+}
+
+.delivery-result.preview {
+  background: #eef3f7;
+  color: #456277;
+}
+
+.delivery-result.delivered {
+  background: #eaf6f0;
+  color: var(--success);
+}
+
+.delivery-result.error {
+  background: #fff0ec;
+  color: #a3482f;
+}
+
+.delivery-result small {
+  margin-top: 2px;
+  opacity: .72;
+  word-break: break-all;
+}
+
+@media (max-width: 520px) {
+  .demo-send-form {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-send-form .primary-button {
+    width: 100%;
+  }
+}
