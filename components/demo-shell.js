@@ -998,6 +998,15 @@ function ReportsSection() {
 
   const activeVisual = visualSet[visualIndex % visualSet.length];
 
+  const generatedImageStyle = imageGeneration.imageUrl
+    ? {
+        backgroundImage:
+          `linear-gradient(rgba(7, 10, 12, .12), rgba(7, 10, 12, .34)), url("${imageGeneration.imageUrl}")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }
+    : undefined;
+
   useEffect(() => {
     let active = true;
 
@@ -1336,11 +1345,22 @@ function ReportsSection() {
                     <span>Ativo visual</span>
                     <small>geração contextual demonstrativa</small>
                   </div>
-                  <Status>VISUAL AI · DEMO</Status>
+                  <Status kind={imageEngine?.mode === "live" && imageEngine?.liveConfigured ? "live" : "neutral"}>
+                    {imageEngine?.mode === "live" && imageEngine?.liveConfigured
+                      ? "VISUAL AI · LIVE"
+                      : "VISUAL AI · PREVIEW"}
+                  </Status>
                 </div>
 
                 <div className="visual-studio-grid">
-                  <div className={"generated-visual " + activeVisual.id}>
+                  <div
+                    className={
+                      "generated-visual " +
+                      activeVisual.id +
+                      (imageGeneration.imageUrl ? " has-real-image" : "")
+                    }
+                    style={generatedImageStyle}
+                  >
                     <div className="generated-grid" />
                     <div className="generated-machine machine-a" />
                     <div className="generated-machine machine-b" />
@@ -1362,7 +1382,7 @@ function ReportsSection() {
                           type="button"
                           key={visual.id}
                           className={index === visualIndex ? "active" : ""}
-                          onClick={() => setVisualIndex(index)}
+                          onClick={() => chooseVisual(index)}
                         >
                           <span>{String(index + 1).padStart(2, "0")}</span>
                           <strong>{visual.label}</strong>
@@ -1372,22 +1392,63 @@ function ReportsSection() {
 
                     <div className="visual-prompt">
                       <span>PROMPT SUGERIDO</span>
-                      <p>{activeVisual.prompt}</p>
+                      <p>{imageGeneration.prompt || activeVisual.prompt}</p>
                     </div>
 
                     <div className="visual-action-row">
-                      <button type="button" className="terminal-action" onClick={cycleVisual}>
-                        GERAR IMAGEM
+                      <button
+                        type="button"
+                        className="terminal-action"
+                        onClick={generateVisualImage}
+                        disabled={imageGeneration.status === "loading"}
+                      >
+                        {imageGeneration.status === "loading"
+                          ? "GERANDO..."
+                          : "GERAR IMAGEM"}
                       </button>
-                      <button type="button" className="secondary-terminal-button" onClick={cycleVisual}>
+                      <button
+                        type="button"
+                        className="secondary-terminal-button"
+                        onClick={generateVisualImage}
+                        disabled={imageGeneration.status === "loading"}
+                      >
                         REGERAR
                       </button>
                     </div>
 
                     <small className="visual-demo-note">
-                      Na versão operacional, este comando acionaria o gerador de imagens e
-                      armazenaria o ativo aprovado na campanha.
+                      {imageEngine?.mode === "live" && imageEngine?.liveConfigured
+                        ? "Geração real habilitada. O ativo é armazenado e reutilizado nos previews dos canais."
+                        : "Em preview, validamos prompt e fluxo sem consumir geração de imagem. Ao ativar live, OpenAI + Blob + Neon passam a operar este botão."}
                     </small>
+
+                    {imageGeneration.status !== "idle" && (
+                      <div
+                        className={
+                          "visual-generation-message " +
+                          (imageGeneration.status === "error"
+                            ? "error"
+                            : imageGeneration.imageUrl
+                              ? "success"
+                              : "preview")
+                        }
+                        role="status"
+                      >
+                        <strong>
+                          {imageGeneration.status === "loading"
+                            ? "PROCESSANDO"
+                            : imageGeneration.status === "error"
+                              ? "GERAÇÃO NÃO CONCLUÍDA"
+                              : imageGeneration.imageUrl
+                                ? "ATIVO GERADO"
+                                : "PROMPT VALIDADO"}
+                        </strong>
+                        <span>{imageGeneration.message}</span>
+                        {imageGeneration.assetId && (
+                          <small>Asset: {imageGeneration.assetId}</small>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </section>
@@ -1440,7 +1501,14 @@ function ReportsSection() {
                           <strong>TEXFIELD</strong>
                           <span>INFORMAÇÃO · TECNOLOGIA · INDÚSTRIA</span>
                         </div>
-                        <div className={"channel-visual " + activeVisual.id}>
+                        <div
+                          className={
+                            "channel-visual " +
+                            activeVisual.id +
+                            (imageGeneration.imageUrl ? " has-real-image" : "")
+                          }
+                          style={generatedImageStyle}
+                        >
                           <div className="channel-visual-grid" />
                           <span>{activeVisual.label}</span>
                         </div>
@@ -1464,7 +1532,14 @@ function ReportsSection() {
                         </div>
                       </div>
                       <div className="phone-chat">
-                        <div className={"wa-image-preview " + activeVisual.id}>
+                        <div
+                          className={
+                            "wa-image-preview " +
+                            activeVisual.id +
+                            (imageGeneration.imageUrl ? " has-real-image" : "")
+                          }
+                          style={generatedImageStyle}
+                        >
                           <div className="channel-visual-grid" />
                           <span>{activeVisual.title}</span>
                         </div>
@@ -1497,7 +1572,14 @@ function ReportsSection() {
                         <span>#IndústriaTêxtil #Tecnologia #Produtividade</span>
                       </div>
 
-                      <div className={"linkedin-post-visual " + activeVisual.id}>
+                      <div
+                        className={
+                          "linkedin-post-visual " +
+                          activeVisual.id +
+                          (imageGeneration.imageUrl ? " has-real-image" : "")
+                        }
+                        style={generatedImageStyle}
+                      >
                         <div className="channel-visual-grid" />
                         <div>
                           <span>{activeVisual.label}</span>
