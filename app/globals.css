@@ -3465,3 +3465,87 @@ input:focus-visible {
     width: 100%;
   }
 }
+
+
+.generated-visual.has-real-image,
+.channel-visual.has-real-image,
+.wa-image-preview.has-real-image,
+.linkedin-post-visual.has-real-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.generated-visual.has-real-image .generated-grid,
+.generated-visual.has-real-image .generated-machine,
+.generated-visual.has-real-image .generated-data-line,
+.channel-visual.has-real-image .channel-visual-grid,
+.wa-image-preview.has-real-image .channel-visual-grid,
+.linkedin-post-visual.has-real-image .channel-visual-grid {
+  display: none;
+}
+
+.generated-visual.has-real-image .generated-visual-copy,
+.linkedin-post-visual.has-real-image > div:last-child {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .7);
+}
+
+.visual-action-row button:disabled {
+  cursor: wait;
+  opacity: .55;
+}
+
+.visual-generation-message {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #364149;
+  background: #0a0e11;
+}
+
+.visual-generation-message strong,
+.visual-generation-message span,
+.visual-generation-message small {
+  display: block;
+}
+
+.visual-generation-message strong {
+  font: 800 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .07em;
+}
+
+.visual-generation-message span,
+.visual-generation-message small {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.visual-generation-message span {
+  color: #87939b;
+}
+
+.visual-generation-message small {
+  color: #56626b;
+  word-break: break-all;
+}
+
+.visual-generation-message.success {
+  border-color: rgba(127, 196, 155, .35);
+}
+
+.visual-generation-message.success strong {
+  color: var(--success);
+}
+
+.visual-generation-message.preview strong {
+  color: #bdc6cc;
+}
+
+.visual-generation-message.error {
+  border-color: rgba(219, 141, 121, .35);
+}
+
+.visual-generation-message.error strong {
+  color: var(--danger);
+}
