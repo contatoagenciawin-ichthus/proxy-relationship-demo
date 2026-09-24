@@ -116,3 +116,5 @@ Ela cria:
 - `editorial_generation_logs`
 
 A aplicação continua compilando sem credenciais porque os recursos externos são inicializados apenas em runtime.
+
+Preview deployments consume the environment variables currently configured for the Vercel project at deploy/runtime.
