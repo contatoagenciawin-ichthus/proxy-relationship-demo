@@ -246,6 +246,203 @@ const radarTopics = [
   },
 ];
 
+
+const radarChannelCopy = {
+  automacao: {
+    email: {
+      eyebrow: "PRODUTIVIDADE INDUSTRIAL",
+      subject: "Automação resolve tudo? O que realmente aumenta a produtividade",
+      preheader: "Velocidade é apenas uma parte da equação. Setup, estabilidade, manutenção e suporte também contam.",
+      headline: "Produtividade não é apenas produzir mais rápido.",
+      body:
+        "Ao avaliar automação, vale olhar para o conjunto da operação: estabilidade, tempo de setup, manutenção, disponibilidade de peças e suporte técnico. É essa combinação que transforma capacidade instalada em produção previsível.",
+      cta: "Ler análise completa",
+    },
+    whatsapp: {
+      intro: "Olá. Separamos uma pauta que tem aparecido cada vez mais nas discussões do setor:",
+      highlight: "Automação e produtividade não são sinônimos.",
+      body:
+        "Uma máquina mais rápida pode não entregar o ganho esperado quando setup, manutenção, peças e suporte criam gargalos na operação.",
+      cta: "Quer receber a análise completa?",
+    },
+    linkedin: {
+      headline: "Automação industrial: produtividade começa antes da velocidade da máquina.",
+      body:
+        "A discussão sobre automação na indústria têxtil costuma começar pela capacidade dos equipamentos. Mas produtividade sustentada depende também de estabilidade, setup, manutenção, disponibilidade de peças e suporte. Avaliar tecnologia por esse conjunto ajuda a aproximar investimento de resultado operacional.",
+      footer: "Tecnologia, operação e suporte precisam ser avaliados juntos.",
+    },
+  },
+  "ia-industria": {
+    email: {
+      eyebrow: "IA + INDÚSTRIA 4.0",
+      subject: "IA na indústria têxtil: onde a tecnologia já pode apoiar a operação",
+      preheader: "Menos promessa, mais aplicação prática em dados, integração e decisão.",
+      headline: "IA industrial começa com processo e dados confiáveis.",
+      body:
+        "Antes de pensar em automação inteligente, a empresa precisa enxergar o processo. Dados de produção, integração entre equipamentos e critérios claros de decisão são a base para usar IA com utilidade operacional.",
+      cta: "Ver aplicações práticas",
+    },
+    whatsapp: {
+      intro: "Um tema que está ganhando espaço no setor:",
+      highlight: "IA na indústria têxtil.",
+      body:
+        "O ponto não é simplesmente adicionar IA à operação. O valor aparece quando dados, equipamentos e processo estão conectados para apoiar decisões reais.",
+      cta: "Posso te enviar um resumo com aplicações práticas?",
+    },
+    linkedin: {
+      headline: "IA na indústria têxtil: o desafio não é usar IA. É criar contexto para ela.",
+      body:
+        "Dados fragmentados, processos desconectados e pouca visibilidade operacional limitam qualquer iniciativa de inteligência. Na prática, a transformação começa pela integração: entender o processo, organizar dados e então aplicar automação e IA onde existe uma decisão concreta a melhorar.",
+      footer: "Indústria 4.0 é integração antes de ser ferramenta.",
+    },
+  },
+  impressao: {
+    email: {
+      eyebrow: "IMPRESSÃO DIGITAL",
+      subject: "Produção sob demanda: onde a impressão digital muda a lógica da operação",
+      preheader: "Flexibilidade, personalização e resposta mais rápida a lotes variáveis.",
+      headline: "Produzir diferente pode ser mais importante do que produzir mais.",
+      body:
+        "A impressão digital amplia possibilidades de personalização, reduz barreiras para lotes menores e encurta a resposta a novas demandas. O ganho, porém, depende de entender onde essa flexibilidade se encaixa no processo produtivo.",
+      cta: "Explorar o tema",
+    },
+    whatsapp: {
+      intro: "Uma mudança importante na lógica de produção:",
+      highlight: "mais flexibilidade para lotes e personalização.",
+      body:
+        "A impressão digital pode ajudar operações que precisam responder a volumes menores, variedade maior e ciclos mais curtos.",
+      cta: "Quer ver os pontos que merecem atenção antes de investir?",
+    },
+    linkedin: {
+      headline: "Produção sob demanda está mudando a conversa sobre impressão têxtil.",
+      body:
+        "Personalização, variedade e ciclos menores estão pressionando a indústria por mais flexibilidade. A impressão digital entra nesse contexto não apenas como tecnologia de estamparia, mas como ferramenta para redesenhar prazos, lotes e planejamento.",
+      footer: "Flexibilidade também é uma variável de produtividade.",
+    },
+  },
+  manutencao: {
+    email: {
+      eyebrow: "PÓS-VENDA + PRODUTIVIDADE",
+      subject: "Máquina rápida, operação parada: por que suporte e peças também definem produtividade",
+      preheader: "O custo de uma máquina não termina na compra. A disponibilidade operacional precisa entrar na conta.",
+      headline: "A melhor máquina é a que continua produzindo.",
+      body:
+        "Desempenho técnico importa, mas uma operação produtiva também depende de manutenção, disponibilidade de peças e suporte. Quando esses fatores entram na análise, o investimento deixa de ser apenas aquisição de equipamento e passa a ser decisão de continuidade operacional.",
+      cta: "Ver critérios de avaliação",
+    },
+    whatsapp: {
+      intro: "Uma pergunta simples para quem avalia equipamento:",
+      highlight: "o que acontece quando a máquina para?",
+      body:
+        "Peças, manutenção e suporte técnico também fazem parte da produtividade. Esse custo quase sempre aparece depois da compra.",
+      cta: "Quer receber um checklist de avaliação?",
+    },
+    linkedin: {
+      headline: "Produtividade também se mede quando a máquina não está produzindo.",
+      body:
+        "Velocidade, capacidade e tecnologia chamam atenção na compra. Mas disponibilidade de peças, manutenção e suporte determinam quanto tempo o equipamento permanece realmente disponível para produzir. Pós-venda não é detalhe operacional: é parte do desempenho do investimento.",
+      footer: "Disponibilidade operacional também é produtividade.",
+    },
+  },
+  rastreabilidade: {
+    email: {
+      eyebrow: "RASTREABILIDADE",
+      subject: "Rastreabilidade têxtil: por que o tema está deixando de ser apenas institucional",
+      preheader: "Mais visibilidade sobre materiais, processos e cadeia pode melhorar decisões operacionais.",
+      headline: "Rastreabilidade transforma informação em capacidade de decisão.",
+      body:
+        "Conhecer a origem, o fluxo e o destino dos materiais aumenta a visibilidade sobre a cadeia. Isso aproxima sustentabilidade da operação e cria melhores condições para responder a exigências de clientes, mercado e eficiência de recursos.",
+      cta: "Entender os impactos",
+    },
+    whatsapp: {
+      intro: "Um tema que está saindo do discurso e entrando na operação:",
+      highlight: "rastreabilidade têxtil.",
+      body:
+        "Mais visibilidade sobre materiais e processos ajuda a responder a exigências de mercado e também melhora decisões internas.",
+      cta: "Quer receber uma visão objetiva sobre o tema?",
+    },
+    linkedin: {
+      headline: "Rastreabilidade está deixando de ser apenas uma pauta de sustentabilidade.",
+      body:
+        "Quando a empresa consegue enxergar melhor materiais, fornecedores e etapas do processo, ela ganha capacidade de responder a exigências externas e também de tomar decisões internas com mais informação. Circularidade, eficiência de recursos e rastreabilidade começam a convergir na operação.",
+      footer: "Sustentabilidade ganha força quando vira processo.",
+    },
+  },
+  mercado: {
+    email: {
+      eyebrow: "MERCADO TÊXTIL",
+      subject: "O que acompanhar no mercado têxtil antes da próxima decisão de investimento",
+      preheader: "Câmbio, matéria-prima, feiras e tecnologia podem mudar o contexto de uma decisão industrial.",
+      headline: "Decisão de investimento começa antes da cotação.",
+      body:
+        "Movimentos de câmbio, matéria-prima, tecnologia, feiras e fornecedores ajudam a formar o contexto de uma decisão. Acompanhar esses sinais de forma organizada permite conversar com clientes antes que a demanda vire apenas um pedido de preço.",
+      cta: "Ver sinais para acompanhar",
+    },
+    whatsapp: {
+      intro: "Alguns sinais valem acompanhar antes de uma decisão de investimento:",
+      highlight: "câmbio, matéria-prima, feiras e novos equipamentos.",
+      body:
+        "Organizar essas informações ajuda a antecipar conversas e avaliar melhor o momento de cada projeto.",
+      cta: "Quer receber um resumo periódico?",
+    },
+    linkedin: {
+      headline: "Relacionamento comercial melhora quando a conversa começa antes da cotação.",
+      body:
+        "Câmbio, matéria-prima, eventos, lançamentos e movimentos do setor criam contexto para decisões industriais. Acompanhar esses sinais permite que empresas fornecedoras mantenham uma conversa útil com o mercado sem depender apenas de campanhas promocionais.",
+      footer: "Informação útil também é relacionamento.",
+    },
+  },
+};
+
+const radarVisualVariants = {
+  automacao: [
+    {
+      id: "industrial-photo",
+      label: "Fotografia industrial",
+      title: "Fluxo automatizado em operação",
+      subtitle: "Máquina, processo e produtividade no mesmo enquadramento",
+      prompt: "Ambiente industrial têxtil contemporâneo, maquinário em operação, detalhes mecânicos, sensação de escala, fotografia editorial técnica, luz industrial controlada, sem pessoas em primeiro plano",
+    },
+    {
+      id: "technical-grid",
+      label: "Diagrama técnico",
+      title: "Produtividade como sistema",
+      subtitle: "Setup · estabilidade · manutenção · suporte",
+      prompt: "Visual técnico abstrato inspirado em diagramas industriais, linhas de fluxo, módulos mecânicos, indicadores de processo e grid de engenharia, estética premium e sóbria",
+    },
+    {
+      id: "market-editorial",
+      label: "Editorial de mercado",
+      title: "Automação além da velocidade",
+      subtitle: "Decisão industrial orientada por operação",
+      prompt: "Composição editorial industrial com máquina têxtil, dados de produtividade, tipografia técnica e leitura de mercado, estética de relatório executivo",
+    },
+  ],
+  default: [
+    {
+      id: "industrial-photo",
+      label: "Fotografia industrial",
+      title: "Tecnologia têxtil em contexto",
+      subtitle: "Operação, mercado e aplicação",
+      prompt: "Ambiente industrial têxtil contemporâneo, maquinário e processo, fotografia editorial técnica, contraste elegante e composição profissional",
+    },
+    {
+      id: "technical-grid",
+      label: "Diagrama técnico",
+      title: "Informação aplicada à operação",
+      subtitle: "Dados, processo e decisão",
+      prompt: "Diagrama industrial abstrato, grid técnico, indicadores de processo, fluxos e módulos, estética sofisticada de engenharia",
+    },
+    {
+      id: "market-editorial",
+      label: "Editorial de mercado",
+      title: "Tema em movimento",
+      subtitle: "Contexto para relacionamento comercial",
+      prompt: "Composição editorial para setor têxtil com elementos de mercado, tecnologia e operação, visual premium e corporativo",
+    },
+  ],
+};
+
 function Status({ kind = "neutral", children }) {
   return <span className={"terminal-status " + kind}>{children}</span>;
 }
@@ -778,24 +975,39 @@ function ReportsSection() {
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [draftVisible, setDraftVisible] = useState(false);
   const [distributionState, setDistributionState] = useState("");
+  const [selectedChannel, setSelectedChannel] = useState("email");
+  const [visualIndex, setVisualIndex] = useState(0);
 
   const selectedTopic =
     radarTopics.find((topic) => topic.id === selectedTopicId) || radarTopics[0];
+
+  const channelCopy =
+    radarChannelCopy[selectedTopic.id] || radarChannelCopy.automacao;
+
+  const visualSet =
+    radarVisualVariants[selectedTopic.id] || radarVisualVariants.default;
+
+  const activeVisual = visualSet[visualIndex % visualSet.length];
 
   function selectTopic(topicId) {
     setSelectedTopicId(topicId);
     setWorkspaceOpen(false);
     setDraftVisible(false);
     setDistributionState("");
+    setSelectedChannel("email");
+    setVisualIndex(0);
   }
 
   function openWorkspace() {
     setWorkspaceOpen(true);
     setDraftVisible(false);
     setDistributionState("");
+    setSelectedChannel("email");
+    setVisualIndex(0);
   }
 
   function deriveChannel(channel) {
+    setSelectedChannel(channel);
     setDistributionState(
       channel === "email"
         ? "Versão para e-mail preparada no fluxo demonstrativo."
@@ -803,6 +1015,10 @@ function ReportsSection() {
           ? "Versão para WhatsApp preparada no fluxo demonstrativo."
           : "Versão para LinkedIn preparada no fluxo demonstrativo.",
     );
+  }
+
+  function cycleVisual() {
+    setVisualIndex((current) => (current + 1) % visualSet.length);
   }
 
   return (
@@ -836,7 +1052,9 @@ function ReportsSection() {
         <div className="source-grid">
           {radarSources.map(([name, focus, status]) => (
             <div className="source-row" key={name}>
-              <div className="source-index">{String(radarSources.findIndex((source) => source[0] === name) + 1).padStart(2, "0")}</div>
+              <div className="source-index">
+                {String(radarSources.findIndex((source) => source[0] === name) + 1).padStart(2, "0")}
+              </div>
               <div>
                 <strong>{name}</strong>
                 <span>{focus}</span>
@@ -997,12 +1215,12 @@ function ReportsSection() {
           </div>
 
           {draftVisible && (
-            <div className="draft-stage">
+            <div className="editorial-production">
               <div className="draft-copy">
                 <div className="terminal-section-head">
                   <div>
                     <span>Rascunho editorial</span>
-                    <small>exemplo de saída assistida</small>
+                    <small>texto base para revisão humana</small>
                   </div>
                   <Status>DRAFT</Status>
                 </div>
@@ -1010,44 +1228,216 @@ function ReportsSection() {
                 <article>
                   <span className="terminal-kicker">TÍTULO SUGERIDO</span>
                   <h3>{selectedTopic.articleTitle}</h3>
+                  <p>{channelCopy.email.body}</p>
                   <p>
-                    Na indústria têxtil, produtividade não depende apenas da velocidade
-                    nominal de um equipamento. A estabilidade da operação, o tempo de
-                    setup, a manutenção, a disponibilidade de peças e a capacidade de
-                    suporte também influenciam o resultado que chega ao final da linha.
-                  </p>
-                  <p>
-                    Este rascunho demonstra como o sistema pode transformar um tema
-                    identificado no radar em uma pauta estruturada. Antes de qualquer
-                    publicação, a Texfield revisaria dados, posicionamento técnico e
-                    referências.
+                    A proposta do assistente é organizar o raciocínio e acelerar a primeira
+                    versão. Dados técnicos, exemplos, posicionamento e referências continuam
+                    sob revisão da Texfield antes de qualquer publicação.
                   </p>
                 </article>
               </div>
 
-              <aside className="distribution-workflow">
+              <section className="visual-studio">
                 <div className="terminal-section-head">
                   <div>
-                    <span>Derivar conteúdo</span>
-                    <small>um tema, múltiplos canais</small>
+                    <span>Ativo visual</span>
+                    <small>geração contextual demonstrativa</small>
                   </div>
+                  <Status>VISUAL AI · DEMO</Status>
                 </div>
 
-                <div className="channel-actions">
-                  <button type="button" onClick={() => deriveChannel("email")}>
-                    <span>E-MAIL</span>
-                    <strong>Criar versão de relacionamento</strong>
-                    <small>assunto, preheader, corpo e CTA</small>
-                  </button>
-                  <button type="button" onClick={() => deriveChannel("whatsapp")}>
-                    <span>WHATSAPP</span>
-                    <strong>Criar versão curta</strong>
-                    <small>mensagem objetiva com contexto</small>
-                  </button>
-                  <button type="button" onClick={() => deriveChannel("linkedin")}>
-                    <span>LINKEDIN</span>
-                    <strong>Criar versão institucional</strong>
-                    <small>abertura, desenvolvimento e fechamento</small>
+                <div className="visual-studio-grid">
+                  <div className={"generated-visual " + activeVisual.id}>
+                    <div className="generated-grid" />
+                    <div className="generated-machine machine-a" />
+                    <div className="generated-machine machine-b" />
+                    <div className="generated-data-line line-a" />
+                    <div className="generated-data-line line-b" />
+                    <div className="generated-visual-copy">
+                      <span>{activeVisual.label}</span>
+                      <strong>{activeVisual.title}</strong>
+                      <small>{activeVisual.subtitle}</small>
+                    </div>
+                  </div>
+
+                  <div className="visual-control-panel">
+                    <span className="terminal-kicker">DIREÇÃO VISUAL</span>
+
+                    <div className="visual-variant-tabs">
+                      {visualSet.map((visual, index) => (
+                        <button
+                          type="button"
+                          key={visual.id}
+                          className={index === visualIndex ? "active" : ""}
+                          onClick={() => setVisualIndex(index)}
+                        >
+                          <span>{String(index + 1).padStart(2, "0")}</span>
+                          <strong>{visual.label}</strong>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="visual-prompt">
+                      <span>PROMPT SUGERIDO</span>
+                      <p>{activeVisual.prompt}</p>
+                    </div>
+
+                    <div className="visual-action-row">
+                      <button type="button" className="terminal-action" onClick={cycleVisual}>
+                        GERAR IMAGEM
+                      </button>
+                      <button type="button" className="secondary-terminal-button" onClick={cycleVisual}>
+                        REGERAR
+                      </button>
+                    </div>
+
+                    <small className="visual-demo-note">
+                      Na versão operacional, este comando acionaria o gerador de imagens e
+                      armazenaria o ativo aprovado na campanha.
+                    </small>
+                  </div>
+                </div>
+              </section>
+
+              <section className="channel-preview-studio">
+                <div className="terminal-section-head">
+                  <div>
+                    <span>Preview multicanal</span>
+                    <small>a mesma pauta adaptada ao meio de envio</small>
+                  </div>
+                  <Status kind="live">3 CANAIS</Status>
+                </div>
+
+                <div className="channel-tabs">
+                  {[
+                    ["email", "E-mail"],
+                    ["whatsapp", "WhatsApp"],
+                    ["linkedin", "LinkedIn"],
+                  ].map(([key, label]) => (
+                    <button
+                      type="button"
+                      key={key}
+                      className={selectedChannel === key ? "active" : ""}
+                      onClick={() => {
+                        setSelectedChannel(key);
+                        setDistributionState("");
+                      }}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="channel-preview-body">
+                  {selectedChannel === "email" && (
+                    <div className="email-device-preview">
+                      <div className="email-preview-meta">
+                        <div>
+                          <span>ASSUNTO</span>
+                          <strong>{channelCopy.email.subject}</strong>
+                        </div>
+                        <div>
+                          <span>PREHEADER</span>
+                          <p>{channelCopy.email.preheader}</p>
+                        </div>
+                      </div>
+
+                      <div className="email-preview-message">
+                        <div className="email-preview-brand">
+                          <strong>TEXFIELD</strong>
+                          <span>INFORMAÇÃO · TECNOLOGIA · INDÚSTRIA</span>
+                        </div>
+                        <div className={"channel-visual " + activeVisual.id}>
+                          <div className="channel-visual-grid" />
+                          <span>{activeVisual.label}</span>
+                        </div>
+                        <div className="email-preview-content">
+                          <span>{channelCopy.email.eyebrow}</span>
+                          <h3>{channelCopy.email.headline}</h3>
+                          <p>{channelCopy.email.body}</p>
+                          <button type="button">{channelCopy.email.cta}</button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedChannel === "whatsapp" && (
+                    <div className="whatsapp-device-preview">
+                      <div className="phone-topbar">
+                        <div className="phone-avatar">TX</div>
+                        <div>
+                          <strong>Texfield</strong>
+                          <span>canal de relacionamento</span>
+                        </div>
+                      </div>
+                      <div className="phone-chat">
+                        <div className={"wa-image-preview " + activeVisual.id}>
+                          <div className="channel-visual-grid" />
+                          <span>{activeVisual.title}</span>
+                        </div>
+                        <div className="wa-message-bubble">
+                          <p>{channelCopy.whatsapp.intro}</p>
+                          <strong>{channelCopy.whatsapp.highlight}</strong>
+                          <p>{channelCopy.whatsapp.body}</p>
+                          <a>{channelCopy.whatsapp.cta}</a>
+                          <small>11:32 ✓✓</small>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedChannel === "linkedin" && (
+                    <div className="linkedin-device-preview">
+                      <div className="linkedin-author">
+                        <div className="linkedin-avatar">TX</div>
+                        <div>
+                          <strong>Texfield</strong>
+                          <span>Máquinas, peças e soluções para a indústria têxtil</span>
+                          <small>Agora · 🌐</small>
+                        </div>
+                      </div>
+
+                      <div className="linkedin-post-copy">
+                        <strong>{channelCopy.linkedin.headline}</strong>
+                        <p>{channelCopy.linkedin.body}</p>
+                        <p className="linkedin-footer-copy">{channelCopy.linkedin.footer}</p>
+                        <span>#IndústriaTêxtil #Tecnologia #Produtividade</span>
+                      </div>
+
+                      <div className={"linkedin-post-visual " + activeVisual.id}>
+                        <div className="channel-visual-grid" />
+                        <div>
+                          <span>{activeVisual.label}</span>
+                          <strong>{activeVisual.title}</strong>
+                        </div>
+                      </div>
+
+                      <div className="linkedin-actions">
+                        <span>Recomendar</span>
+                        <span>Comentar</span>
+                        <span>Compartilhar</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="channel-finalize-bar">
+                  <div>
+                    <span>CANAL SELECIONADO</span>
+                    <strong>
+                      {selectedChannel === "email"
+                        ? "E-mail"
+                        : selectedChannel === "whatsapp"
+                          ? "WhatsApp"
+                          : "LinkedIn"}
+                    </strong>
+                  </div>
+                  <button
+                    type="button"
+                    className="terminal-action"
+                    onClick={() => deriveChannel(selectedChannel)}
+                  >
+                    PREPARAR VERSÃO FINAL
                   </button>
                 </div>
 
@@ -1057,7 +1447,7 @@ function ReportsSection() {
                     <span>{distributionState}</span>
                   </div>
                 )}
-              </aside>
+              </section>
             </div>
           )}
         </div>
@@ -1067,8 +1457,8 @@ function ReportsSection() {
         <span>DEMO</span>
         <p>
           O radar desta versão usa temas e fontes ilustrativos. Em produção, coleta,
-          relevância, periodicidade e fontes seriam configuráveis por tenant, com revisão
-          humana antes da publicação.
+          relevância, periodicidade, fontes, geração visual e aprovação seriam configuráveis
+          por tenant, com revisão humana antes da publicação.
         </p>
       </div>
     </section>
