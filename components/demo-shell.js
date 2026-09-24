@@ -96,6 +96,156 @@ const signals = [
   ["Outros", 10],
 ];
 
+const radarSources = [
+  ["ABIT", "Mercado brasileiro, inovação e sustentabilidade", "MONITORADA"],
+  ["Febratex", "Tecnologia, máquinas, produtividade e eventos", "MONITORADA"],
+  ["ITMF", "Indústria global, fibras, produção e comércio", "MONITORADA"],
+  ["Fabricantes", "Lançamentos, aplicações e suporte técnico", "CURADORIA"],
+  ["Mercado", "Algodão, câmbio e sinais econômicos", "INDICADORES"],
+  ["Feiras & eventos", "Agenda setorial e oportunidades comerciais", "AGENDA"],
+];
+
+const radarTopics = [
+  {
+    id: "automacao",
+    relevance: "ALTA",
+    trend: "EM DESTAQUE",
+    title: "Automação e produtividade",
+    summary:
+      "Como reduzir gargalos, integrar processos e avaliar ganhos reais de produtividade.",
+    sources: ["Febratex", "ABIT", "Fabricantes"],
+    audience: "Gestores industriais / produção",
+    relation: "Máquinas · produtividade · assistência",
+    angle:
+      "Ir além da velocidade nominal e discutir estabilidade, setup, manutenção, disponibilidade de peças e suporte.",
+    articleTitle:
+      "Automação resolve tudo? O que realmente aumenta a produtividade de uma operação têxtil",
+    objective: "Educação + relacionamento",
+    outline: [
+      "O que normalmente é chamado de produtividade",
+      "Onde a operação perde eficiência sem perceber",
+      "O papel da automação e da integração de processos",
+      "O que avaliar antes de escolher um equipamento",
+      "Por que manutenção, peças e suporte entram na conta",
+    ],
+  },
+  {
+    id: "ia-industria",
+    relevance: "ALTA",
+    trend: "CRESCENTE",
+    title: "IA e Indústria 4.0",
+    summary:
+      "Aplicações práticas de dados, automação e inteligência na operação têxtil.",
+    sources: ["Febratex", "ITMF", "Fabricantes"],
+    audience: "Direção industrial / engenharia",
+    relation: "Tecnologia · integração · modernização",
+    angle:
+      "Separar promessa de aplicação prática e mostrar onde dados e automação podem apoiar decisões de produção.",
+    articleTitle:
+      "IA na indústria têxtil: onde a tecnologia já pode apoiar a operação",
+    objective: "Educação + posicionamento",
+    outline: [
+      "Por que IA virou pauta industrial",
+      "Onde dados já ajudam a produção",
+      "Automação, integração e tomada de decisão",
+      "O que exige infraestrutura e processo",
+      "Como avaliar tecnologias sem seguir apenas o hype",
+    ],
+  },
+  {
+    id: "impressao",
+    relevance: "MÉDIA",
+    trend: "EM MOVIMENTO",
+    title: "Impressão digital e produção sob demanda",
+    summary:
+      "Flexibilidade, personalização e resposta mais rápida a lotes e demandas variáveis.",
+    sources: ["Febratex", "Fabricantes"],
+    audience: "Produção / desenvolvimento de produto",
+    relation: "Tecnologia · flexibilidade · novos processos",
+    angle:
+      "Explicar onde impressão digital amplia flexibilidade sem reduzir a decisão a uma única tecnologia.",
+    articleTitle:
+      "Produção sob demanda: onde a impressão digital muda a lógica da operação",
+    objective: "Educação",
+    outline: [
+      "O que está mudando na demanda",
+      "Flexibilidade e personalização",
+      "Tecnologias e contextos de uso",
+      "Impactos em prazo e planejamento",
+      "O que observar antes de investir",
+    ],
+  },
+  {
+    id: "manutencao",
+    relevance: "ALTA",
+    trend: "RECORRENTE",
+    title: "Máquina não é só velocidade",
+    summary:
+      "Manutenção, estabilidade, disponibilidade de peças e suporte como parte da produtividade.",
+    sources: ["Fabricantes", "Febratex"],
+    audience: "Gestores industriais / manutenção",
+    relation: "Peças · assistência · pós-venda",
+    angle:
+      "Transformar pós-venda em pauta de gestão: custo de parada, previsibilidade e suporte técnico.",
+    articleTitle:
+      "Máquina rápida, operação parada: por que suporte e peças também definem produtividade",
+    objective: "Educação + comercial",
+    outline: [
+      "Velocidade nominal versus produtividade real",
+      "O custo invisível das paradas",
+      "Peças e manutenção como fatores de decisão",
+      "A importância do suporte técnico",
+      "Como comparar equipamentos de forma mais completa",
+    ],
+  },
+  {
+    id: "rastreabilidade",
+    relevance: "MÉDIA",
+    trend: "ESTRATÉGICO",
+    title: "Rastreabilidade e circularidade",
+    summary:
+      "Novos materiais, pressão por eficiência de recursos e maior visibilidade sobre a cadeia.",
+    sources: ["ABIT", "ITMF", "Febratex"],
+    audience: "Direção / sustentabilidade / compras",
+    relation: "Mercado · cadeia · posicionamento",
+    angle:
+      "Tratar sustentabilidade como operação e rastreabilidade, e não apenas como discurso institucional.",
+    articleTitle:
+      "Rastreabilidade têxtil: por que o tema está deixando de ser apenas institucional",
+    objective: "Educação + posicionamento",
+    outline: [
+      "Por que rastreabilidade ganhou importância",
+      "O que a indústria precisa enxergar na cadeia",
+      "Circularidade e eficiência de recursos",
+      "Dados, processo e fornecedores",
+      "Como transformar exigência em vantagem operacional",
+    ],
+  },
+  {
+    id: "mercado",
+    relevance: "MÉDIA",
+    trend: "ACOMPANHAR",
+    title: "Mercado e oportunidades internacionais",
+    summary:
+      "Câmbio, feiras, movimentos da cadeia e novas oportunidades para empresas do setor.",
+    sources: ["ABIT", "ITMF", "Feiras & eventos"],
+    audience: "Direção / comercial",
+    relation: "Mercado · representação · oportunidades",
+    angle:
+      "Usar sinais do setor para criar contato recorrente e útil com clientes, sem transformar a comunicação em propaganda.",
+    articleTitle:
+      "O que acompanhar no mercado têxtil antes da próxima decisão de investimento",
+    objective: "Relacionamento + autoridade",
+    outline: [
+      "Quais sinais merecem acompanhamento",
+      "Câmbio, matéria-prima e investimento",
+      "Feiras e lançamentos",
+      "Movimentos internacionais relevantes",
+      "Como transformar informação em decisão",
+    ],
+  },
+];
+
 function Status({ kind = "neutral", children }) {
   return <span className={"terminal-status " + kind}>{children}</span>;
 }
@@ -624,64 +774,303 @@ function WhatsAppSection() {
 }
 
 function ReportsSection() {
-  const trend = [34, 48, 45, 62, 59, 74, 68, 82, 76, 91, 86, 96];
+  const [selectedTopicId, setSelectedTopicId] = useState(radarTopics[0].id);
+  const [workspaceOpen, setWorkspaceOpen] = useState(false);
+  const [draftVisible, setDraftVisible] = useState(false);
+  const [distributionState, setDistributionState] = useState("");
+
+  const selectedTopic =
+    radarTopics.find((topic) => topic.id === selectedTopicId) || radarTopics[0];
+
+  function selectTopic(topicId) {
+    setSelectedTopicId(topicId);
+    setWorkspaceOpen(false);
+    setDraftVisible(false);
+    setDistributionState("");
+  }
+
+  function openWorkspace() {
+    setWorkspaceOpen(true);
+    setDraftVisible(false);
+    setDistributionState("");
+  }
+
+  function deriveChannel(channel) {
+    setDistributionState(
+      channel === "email"
+        ? "Versão para e-mail preparada no fluxo demonstrativo."
+        : channel === "whatsapp"
+          ? "Versão para WhatsApp preparada no fluxo demonstrativo."
+          : "Versão para LinkedIn preparada no fluxo demonstrativo.",
+    );
+  }
 
   return (
-    <section className="intelligence-layout">
-      <div className="terminal-panel intelligence-main">
+    <section className="radar-shell">
+      <div className="radar-head">
+        <div>
+          <span className="terminal-kicker">INTELIGÊNCIA / RADAR SETORIAL</span>
+          <h2>Do mercado para uma pauta útil de relacionamento.</h2>
+          <p>
+            Fontes selecionadas, sinais do setor e oportunidades editoriais organizadas
+            para ajudar a Texfield a manter contato recorrente sem depender de pautas
+            improvisadas.
+          </p>
+        </div>
+
+        <div className="radar-head-status">
+          <Status kind="live">RADAR DEMONSTRATIVO</Status>
+          <span>6 FONTES · 6 TEMAS · CURADORIA HUMANA + IA</span>
+        </div>
+      </div>
+
+      <div className="source-monitor">
         <div className="terminal-section-head">
           <div>
-            <span>Inteligência de relacionamento</span>
-            <small>leitura operacional da base</small>
+            <span>Fontes de interesse do público</span>
+            <small>configuração demonstrativa do monitoramento</small>
           </div>
-          <Status>30 DIAS</Status>
+          <Status>FONTES SELECIONADAS</Status>
         </div>
 
-        <div className="intelligence-kpis">
-          <div><span>Base ativa</span><strong>1.248</strong><small>+2,9%</small></div>
-          <div><span>Entregabilidade</span><strong>96,8%</strong><small>+1,2 p.p.</small></div>
-          <div><span>CTR médio</span><strong>12,4%</strong><small>+2,1 p.p.</small></div>
-          <div><span>Descadastros</span><strong>0,7%</strong><small>-0,2 p.p.</small></div>
-        </div>
-
-        <div className="trend-chart">
-          <div className="trend-scale">
-            <span>100</span><span>75</span><span>50</span><span>25</span><span>0</span>
-          </div>
-          <div className="trend-bars">
-            {trend.map((value, index) => (
-              <div className="trend-column" key={index}>
-                <div className="trend-value" style={{ height: value + "%" }} />
-                <span>{index + 1}</span>
+        <div className="source-grid">
+          {radarSources.map(([name, focus, status]) => (
+            <div className="source-row" key={name}>
+              <div className="source-index">{String(radarSources.findIndex((source) => source[0] === name) + 1).padStart(2, "0")}</div>
+              <div>
+                <strong>{name}</strong>
+                <span>{focus}</span>
               </div>
+              <Status kind={status === "MONITORADA" ? "live" : "neutral"}>{status}</Status>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="radar-workbench">
+        <div className="terminal-panel topic-list-panel">
+          <div className="terminal-section-head">
+            <div>
+              <span>Temas em destaque</span>
+              <small>oportunidades editoriais para relacionamento</small>
+            </div>
+          </div>
+
+          <div className="topic-list">
+            {radarTopics.map((topic, index) => (
+              <button
+                key={topic.id}
+                className={topic.id === selectedTopic.id ? "active" : ""}
+                onClick={() => selectTopic(topic.id)}
+              >
+                <span className="topic-number">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <div className="topic-status-line">
+                    <Status kind={topic.relevance === "ALTA" ? "live" : "neutral"}>
+                      {topic.relevance}
+                    </Status>
+                    <span>{topic.trend}</span>
+                  </div>
+                  <strong>{topic.title}</strong>
+                  <small>{topic.summary}</small>
+                </div>
+              </button>
             ))}
+          </div>
+        </div>
+
+        <div className="terminal-panel topic-detail-panel">
+          <div className="terminal-section-head">
+            <div>
+              <span>Leitura do tema</span>
+              <small>{selectedTopic.title}</small>
+            </div>
+            <Status kind={selectedTopic.relevance === "ALTA" ? "live" : "neutral"}>
+              RELEVÂNCIA {selectedTopic.relevance}
+            </Status>
+          </div>
+
+          <div className="topic-detail">
+            <div className="topic-detail-title">
+              <span className="terminal-kicker">{selectedTopic.trend}</span>
+              <h3>{selectedTopic.title}</h3>
+              <p>{selectedTopic.summary}</p>
+            </div>
+
+            <div className="topic-context-grid">
+              <div>
+                <span>PÚBLICO RELACIONADO</span>
+                <strong>{selectedTopic.audience}</strong>
+              </div>
+              <div>
+                <span>RELAÇÃO COM A TEXFIELD</span>
+                <strong>{selectedTopic.relation}</strong>
+              </div>
+            </div>
+
+            <div className="topic-analysis">
+              <span>POR QUE ISSO PODE INTERESSAR AO PÚBLICO</span>
+              <p>{selectedTopic.angle}</p>
+            </div>
+
+            <div className="source-tags">
+              <span>FONTES ASSOCIADAS</span>
+              <div>
+                {selectedTopic.sources.map((source) => (
+                  <Status key={source}>{source}</Status>
+                ))}
+              </div>
+            </div>
+
+            <button className="terminal-action radar-primary-action" onClick={openWorkspace}>
+              ESTRUTURAR ARTIGO RELEVANTE
+            </button>
           </div>
         </div>
       </div>
 
-      <aside className="terminal-panel intelligence-side">
-        <div className="terminal-section-head">
-          <div>
-            <span>Leituras da operação</span>
-            <small>sinais demonstrativos</small>
+      {workspaceOpen && (
+        <div className="content-workspace">
+          <div className="workspace-header">
+            <div>
+              <span className="terminal-kicker">ASSISTENTE EDITORIAL</span>
+              <h2>Estrutura sugerida</h2>
+            </div>
+            <button
+              type="button"
+              className="workspace-close"
+              onClick={() => setWorkspaceOpen(false)}
+              aria-label="Fechar estrutura do artigo"
+            >
+              FECHAR ×
+            </button>
           </div>
-        </div>
 
-        <div className="insight-list">
-          <div>
-            <span>01</span>
-            <div><strong>Máquinas concentram 42% do interesse recente</strong><small>maior categoria na base demonstrativa</small></div>
+          <div className="workspace-grid">
+            <div className="workspace-brief">
+              <div className="brief-field">
+                <span>TEMA</span>
+                <strong>{selectedTopic.articleTitle}</strong>
+              </div>
+              <div className="brief-field">
+                <span>PÚBLICO</span>
+                <strong>{selectedTopic.audience}</strong>
+              </div>
+              <div className="brief-field">
+                <span>OBJETIVO</span>
+                <strong>{selectedTopic.objective}</strong>
+              </div>
+              <div className="brief-field">
+                <span>ABORDAGEM</span>
+                <p>{selectedTopic.angle}</p>
+              </div>
+
+              <div className="workspace-sources">
+                <span>FONTES PARA VALIDAÇÃO</span>
+                <div>
+                  {selectedTopic.sources.map((source) => (
+                    <Status key={source}>{source}</Status>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="workspace-outline">
+              <span className="terminal-kicker">ESTRUTURA</span>
+              <ol>
+                {selectedTopic.outline.map((item, index) => (
+                  <li key={item}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{item}</strong>
+                  </li>
+                ))}
+              </ol>
+
+              <button
+                className="terminal-action"
+                type="button"
+                onClick={() => setDraftVisible(true)}
+              >
+                GERAR RASCUNHO DEMONSTRATIVO
+              </button>
+            </div>
           </div>
-          <div>
-            <span>02</span>
-            <div><strong>CTR médio acima das campanhas anteriores</strong><small>crescimento ilustrativo de 2,1 p.p.</small></div>
-          </div>
-          <div>
-            <span>03</span>
-            <div><strong>18 contatos pedem acompanhamento</strong><small>com base em sinais de interação</small></div>
-          </div>
+
+          {draftVisible && (
+            <div className="draft-stage">
+              <div className="draft-copy">
+                <div className="terminal-section-head">
+                  <div>
+                    <span>Rascunho editorial</span>
+                    <small>exemplo de saída assistida</small>
+                  </div>
+                  <Status>DRAFT</Status>
+                </div>
+
+                <article>
+                  <span className="terminal-kicker">TÍTULO SUGERIDO</span>
+                  <h3>{selectedTopic.articleTitle}</h3>
+                  <p>
+                    Na indústria têxtil, produtividade não depende apenas da velocidade
+                    nominal de um equipamento. A estabilidade da operação, o tempo de
+                    setup, a manutenção, a disponibilidade de peças e a capacidade de
+                    suporte também influenciam o resultado que chega ao final da linha.
+                  </p>
+                  <p>
+                    Este rascunho demonstra como o sistema pode transformar um tema
+                    identificado no radar em uma pauta estruturada. Antes de qualquer
+                    publicação, a Texfield revisaria dados, posicionamento técnico e
+                    referências.
+                  </p>
+                </article>
+              </div>
+
+              <aside className="distribution-workflow">
+                <div className="terminal-section-head">
+                  <div>
+                    <span>Derivar conteúdo</span>
+                    <small>um tema, múltiplos canais</small>
+                  </div>
+                </div>
+
+                <div className="channel-actions">
+                  <button type="button" onClick={() => deriveChannel("email")}>
+                    <span>E-MAIL</span>
+                    <strong>Criar versão de relacionamento</strong>
+                    <small>assunto, preheader, corpo e CTA</small>
+                  </button>
+                  <button type="button" onClick={() => deriveChannel("whatsapp")}>
+                    <span>WHATSAPP</span>
+                    <strong>Criar versão curta</strong>
+                    <small>mensagem objetiva com contexto</small>
+                  </button>
+                  <button type="button" onClick={() => deriveChannel("linkedin")}>
+                    <span>LINKEDIN</span>
+                    <strong>Criar versão institucional</strong>
+                    <small>abertura, desenvolvimento e fechamento</small>
+                  </button>
+                </div>
+
+                {distributionState && (
+                  <div className="terminal-message preview" role="status">
+                    <strong>DERIVAÇÃO PREPARADA</strong>
+                    <span>{distributionState}</span>
+                  </div>
+                )}
+              </aside>
+            </div>
+          )}
         </div>
-      </aside>
+      )}
+
+      <div className="radar-disclaimer">
+        <span>DEMO</span>
+        <p>
+          O radar desta versão usa temas e fontes ilustrativos. Em produção, coleta,
+          relevância, periodicidade e fontes seriam configuráveis por tenant, com revisão
+          humana antes da publicação.
+        </p>
+      </div>
     </section>
   );
 }
