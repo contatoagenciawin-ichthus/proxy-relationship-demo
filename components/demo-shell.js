@@ -784,6 +784,112 @@ function Metric({ label, value, helper }) {
   );
 }
 
+
+function ProxyMark({ compact = false }) {
+  return (
+    <span className={"proxy-mark" + (compact ? " compact" : "")} aria-hidden="true">
+      <span />
+    </span>
+  );
+}
+
+function DemoLanding({ tenant, onEnter, proxySiteUrl }) {
+  return (
+    <main className="proxy-demo-entry">
+      <div className="proxy-entry-grid" aria-hidden="true" />
+      <div className="proxy-entry-glow" aria-hidden="true" />
+
+      <header className="proxy-entry-header">
+        <a className="proxy-entry-brand" href={proxySiteUrl}>
+          <ProxyMark />
+          <div>
+            <strong>PROXY</strong>
+            <span>TECHNOLOGY</span>
+          </div>
+        </a>
+
+        <div className="proxy-entry-meta">
+          <span>RELATIONSHIP INTELLIGENCE</span>
+          <b>DEMO PLATFORM</b>
+        </div>
+      </header>
+
+      <section className="proxy-entry-hero">
+        <div className="proxy-entry-copy">
+          <p className="proxy-entry-eyebrow">
+            Proxy Technology · relacionamento, comunicação e inteligência
+          </p>
+
+          <h1>Relacionamento construído para entrar na operação.</h1>
+
+          <p className="proxy-entry-lead">
+            Explore como base própria, e-mail, WhatsApp, sinais comerciais,
+            inteligência de mercado e conteúdo podem operar em um mesmo ambiente.
+          </p>
+
+          <div className="proxy-entry-principle">
+            <span>HUMAN-CENTERED AI</span>
+            <p>
+              Tecnologia para reduzir atrito operacional e ampliar a capacidade das
+              pessoas de decidir, atender e manter relacionamentos de maior valor.
+            </p>
+          </div>
+
+          <div className="proxy-entry-actions">
+            <button type="button" className="proxy-primary-action" onClick={onEnter}>
+              EXPLORAR DEMONSTRAÇÃO
+            </button>
+            <a className="proxy-secondary-action" href={proxySiteUrl}>
+              CONHECER A PROXY ↗
+            </a>
+          </div>
+        </div>
+
+        <aside className="proxy-entry-panel">
+          <div className="proxy-entry-panel-head">
+            <span>AMBIENTE DEMONSTRATIVO</span>
+            <b>ONLINE</b>
+          </div>
+
+          <div className="proxy-entry-tenant">
+            <small>ORGANIZAÇÃO SIMULADA</small>
+            <strong>{tenant.brand}</strong>
+            <p>{tenant.companyDescription}</p>
+          </div>
+
+          <div className="proxy-entry-flow">
+            {[
+              ["01", "Base própria", "Contatos, segmentos e histórico"],
+              ["02", "E-mail", "Campanhas, entrega e interação"],
+              ["03", "WhatsApp", "Atendimento e contexto comercial"],
+              ["04", "Inteligência", "Radar, sinais e oportunidades"],
+              ["05", "Conteúdo", "Adaptação multicanal e ativos"],
+            ].map(([number, title, description]) => (
+              <div key={number}>
+                <span>{number}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <small>{description}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="proxy-entry-disclaimer">
+            Empresa, contatos e métricas são fictícios. Ações públicas não enviam
+            mensagens nem consomem geração de imagem real.
+          </p>
+        </aside>
+      </section>
+
+      <footer className="proxy-entry-footer">
+        <span>PROXY TECHNOLOGY · SOFTWARE · IA · AUTOMAÇÃO · INTEGRAÇÕES</span>
+        <span>DEMO / {tenant.id.toUpperCase()}</span>
+      </footer>
+    </main>
+  );
+}
+
 function Overview({ setSection, profile, tenant }) {
   return (
     <>
@@ -2000,6 +2106,8 @@ export default function DemoShell({ tenant }) {
   const [clock, setClock] = useState("");
   const [showGuide, setShowGuide] = useState(Boolean(tenant.publicDemo));
   const profile = useMemo(() => getDemoProfile(tenant), [tenant]);
+  const proxySiteUrl =
+    process.env.NEXT_PUBLIC_PROXY_SITE_URL || "https://proxy.ichthusmkt.com.br";
 
   useEffect(() => {
     const update = () => {
@@ -2022,8 +2130,36 @@ export default function DemoShell({ tenant }) {
     [section],
   );
 
+  if (tenant.publicDemo && showGuide) {
+    return (
+      <DemoLanding
+        tenant={tenant}
+        proxySiteUrl={proxySiteUrl}
+        onEnter={() => setShowGuide(false)}
+      />
+    );
+  }
+
   return (
     <main className="command-shell">
+      <div className="proxy-product-bar">
+        <a className="proxy-product-brand" href={proxySiteUrl}>
+          <ProxyMark compact />
+          <div>
+            <strong>PROXY</strong>
+            <span>RELATIONSHIP INTELLIGENCE</span>
+          </div>
+        </a>
+
+        <div className="proxy-product-context">
+          <span>DEMO TENANT</span>
+          <strong>{tenant.brand}</strong>
+        </div>
+
+        <a className="proxy-product-link" href={proxySiteUrl}>
+          PROXY TECHNOLOGY ↗
+        </a>
+      </div>
       <div className="market-ticker" aria-label="Faixa informacional demonstrativa">
         <div className="ticker-track">
           {[...tenant.ticker, ...tenant.ticker].map(([label, value], index) => (
@@ -2069,29 +2205,6 @@ export default function DemoShell({ tenant }) {
       </nav>
 
       <div className="command-content">
-        {showGuide && tenant.publicDemo && (
-          <section className="demo-guide" aria-label="Introdução à demonstração">
-            <div>
-              <span className="terminal-kicker">DEMONSTRAÇÃO GUIADA</span>
-              <h1>Veja como relacionamento, comunicação e inteligência podem operar juntos.</h1>
-              <p>
-                Esta empresa é fictícia. Explore a visão geral, campanhas, contatos,
-                atendimento e o radar de inteligência. Nenhuma ação pública envia mensagens
-                ou consome geração de imagem real.
-              </p>
-            </div>
-            <div className="demo-guide-steps">
-              <span>01 · VISÃO GERAL</span>
-              <span>02 · E-MAIL</span>
-              <span>03 · CONTATOS</span>
-              <span>04 · WHATSAPP</span>
-              <span>05 · INTELIGÊNCIA</span>
-            </div>
-            <button className="terminal-action" type="button" onClick={() => setShowGuide(false)}>
-              EXPLORAR DEMONSTRAÇÃO
-            </button>
-          </section>
-        )}
         {section === "overview" && <Overview setSection={setSection} profile={profile} tenant={tenant} />}
         {section === "email" && <EmailSection profile={profile} tenant={tenant} />}
         {section === "contacts" && <ContactsSection profile={profile} />}
@@ -2100,8 +2213,8 @@ export default function DemoShell({ tenant }) {
       </div>
 
       <footer className="command-footer">
-        <span>PROXY TECHNOLOGY · RELATIONSHIP PLATFORM</span>
-        <span>TENANT / {tenant.id.toUpperCase()}</span>
+        <span>POWERED BY PROXY TECHNOLOGY · RELATIONSHIP INTELLIGENCE</span>
+        <span>DEMO TENANT / {tenant.id.toUpperCase()}</span>
       </footer>
     </main>
   );
