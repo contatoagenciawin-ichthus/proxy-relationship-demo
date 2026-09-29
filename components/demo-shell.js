@@ -6,7 +6,7 @@ const navItems = [
   ["overview", "Visão geral"],
   ["email", "E-mail"],
   ["contacts", "Contatos"],
-  ["whatsapp", "WhatsApp"],
+  ["whatsapp", "WhatsApp + IA"],
   ["reports", "Inteligência"],
 ];
 
@@ -1310,8 +1310,117 @@ function ContactsSection({ profile }) {
   );
 }
 
+function getAssistantInsight(selected) {
+  const category = selected.category?.toLowerCase() || "";
+
+  if (category.includes("suporte")) {
+    return {
+      intent: "Suporte técnico",
+      confidence: 96,
+      memory: "Cliente ativo · histórico técnico localizado",
+      signal: "Possível impacto operacional",
+      nextAction: "Abrir atendimento técnico e notificar responsável",
+      actionLabel: "CRIAR ATENDIMENTO",
+      response:
+        "Encontrei o histórico desta conta e vou registrar a solicitação como atendimento técnico. A equipe responsável recebe o contexto desta conversa para continuar sem você precisar repetir as informações.",
+      steps: [
+        "Vincular conversa ao cadastro",
+        "Criar atendimento técnico",
+        "Anexar contexto da mensagem",
+        "Notificar equipe responsável",
+      ],
+    };
+  }
+
+  if (category.includes("peça")) {
+    return {
+      intent: "Cotação de peças",
+      confidence: 94,
+      memory: "Conta reconhecida · interesse anterior em reposição",
+      signal: "Oportunidade comercial de alta prioridade",
+      nextAction: "Criar oportunidade e solicitar identificação do equipamento",
+      actionLabel: "ABRIR OPORTUNIDADE",
+      response:
+        "Claro. Já identifiquei sua empresa e registrei a solicitação de peças. Para direcionarmos a cotação corretamente, preciso apenas do modelo do equipamento ou de uma foto da identificação da máquina.",
+      steps: [
+        "Vincular conversa ao cadastro",
+        "Criar oportunidade de peças",
+        "Solicitar modelo ou identificação",
+        "Direcionar ao responsável comercial",
+      ],
+    };
+  }
+
+  if (category.includes("soluç")) {
+    return {
+      intent: "Diagnóstico comercial",
+      confidence: 91,
+      memory: "Prospect identificado · interesse em eficiência operacional",
+      signal: "Demanda com potencial de projeto",
+      nextAction: "Criar oportunidade e coletar contexto da operação",
+      actionLabel: "QUALIFICAR OPORTUNIDADE",
+      response:
+        "Posso ajudar com isso. Registrei seu interesse em reduzir paradas e organizar o suporte. Para direcionar a conversa, gostaria de entender qual etapa da operação hoje gera mais impacto ou recorrência de parada.",
+      steps: [
+        "Criar oportunidade no CRM",
+        "Classificar intenção comercial",
+        "Solicitar contexto operacional",
+        "Preparar handoff para especialista",
+      ],
+    };
+  }
+
+  return {
+    intent: "Interesse comercial",
+    confidence: 92,
+    memory: "Contato reconhecido · interações anteriores disponíveis",
+    signal: "Interesse ativo em solução",
+    nextAction: "Atualizar CRM e preparar continuidade comercial",
+    actionLabel: "ATUALIZAR CRM",
+    response:
+      "Posso ajudar. Já relacionei sua mensagem ao histórico da empresa e vou organizar as informações para que o atendimento continue a partir deste contexto, sem reiniciar a conversa.",
+    steps: [
+      "Vincular conversa ao cadastro",
+      "Atualizar interesse no CRM",
+      "Registrar contexto comercial",
+      "Direcionar ao responsável",
+    ],
+  };
+}
+
+const autonomyLevels = [
+  ["1", "Assistente", "Sugere respostas"],
+  ["2", "Supervisionado", "Pede aprovação"],
+  ["3", "Operação assistida", "Executa ações permitidas"],
+  ["4", "Autonomia", "Resolve fluxos autorizados"],
+];
+
 function WhatsAppSection({ profile }) {
   const [selected, setSelected] = useState(profile.conversations[0]);
+  const [autonomyLevel, setAutonomyLevel] = useState(3);
+  const [assistantState, setAssistantState] = useState("idle");
+  const insight = useMemo(() => getAssistantInsight(selected), [selected]);
+
+  function chooseConversation(conversation) {
+    setSelected(conversation);
+    setAssistantState("idle");
+  }
+
+  function analyzeConversation() {
+    setAssistantState("analyzed");
+  }
+
+  function generateAssistantReply() {
+    setAssistantState("reply");
+  }
+
+  function simulateAction() {
+    setAssistantState(autonomyLevel >= 3 ? "executed" : "approval");
+  }
+
+  function transferToHuman() {
+    setAssistantState("handoff");
+  }
 
   return (
     <section className="whatsapp-command-grid">
@@ -1328,7 +1437,7 @@ function WhatsAppSection({ profile }) {
           {profile.conversations.map((conversation) => (
             <button
               key={conversation.company}
-              onClick={() => setSelected(conversation)}
+              onClick={() => chooseConversation(conversation)}
               className={selected.company === conversation.company ? "active" : ""}
             >
               <div>
@@ -1364,49 +1473,151 @@ function WhatsAppSection({ profile }) {
             <p>{selected.message}</p>
           </div>
 
-          <div className="context-event">
-            <span>SISTEMA</span>
-            <strong>Contexto identificado · {selected.category}</strong>
-            <small>Responsável sugerido: {selected.owner}</small>
-          </div>
+          {assistantState === "idle" ? (
+            <button className="ai-analysis-trigger" type="button" onClick={analyzeConversation}>
+              <span>PROXY AI</span>
+              <strong>ANALISAR CONTEXTO DA CONVERSA</strong>
+              <small>CRM + histórico + intenção + regras operacionais</small>
+            </button>
+          ) : (
+            <div className="ai-context-event">
+              <div className="ai-context-head">
+                <span>PROXY AI · CONTEXTO</span>
+                <Status kind="live">{insight.confidence}% CONFIANÇA</Status>
+              </div>
+              <div className="ai-context-grid">
+                <div><span>INTENÇÃO</span><strong>{insight.intent}</strong></div>
+                <div><span>MEMÓRIA</span><strong>{insight.memory}</strong></div>
+                <div><span>SINAL</span><strong>{insight.signal}</strong></div>
+                <div><span>PRÓXIMA AÇÃO</span><strong>{insight.nextAction}</strong></div>
+              </div>
+            </div>
+          )}
 
-          <div className="log-entry outgoing">
-            <time>10:43</time>
-            <p>
-              Olá! Recebemos sua mensagem. Vou direcionar sua solicitação ao responsável
-              e seguimos por aqui.
-            </p>
-          </div>
+          {["reply", "executed", "approval", "handoff"].includes(assistantState) && (
+            <div className="log-entry outgoing ai-reply">
+              <time>IA · resposta sugerida</time>
+              <p>{insight.response}</p>
+            </div>
+          )}
+
+          {assistantState === "executed" && (
+            <div className="context-event ai-action-event">
+              <span>AÇÃO SIMULADA</span>
+              <strong>{insight.nextAction}</strong>
+              <small>CRM atualizado · contexto preservado · responsável notificado</small>
+            </div>
+          )}
+
+          {assistantState === "approval" && (
+            <div className="context-event ai-approval-event">
+              <span>APROVAÇÃO NECESSÁRIA</span>
+              <strong>O nível de autonomia atual não permite executar esta ação sozinho.</strong>
+              <small>A resposta pode ser sugerida, mas a ação aguarda um operador.</small>
+            </div>
+          )}
+
+          {assistantState === "handoff" && (
+            <div className="context-event ai-handoff-event">
+              <span>HANDOFF HUMANO</span>
+              <strong>Conversa transferida com contexto completo.</strong>
+              <small>Responsável: {selected.owner} · histórico e intenção anexados.</small>
+            </div>
+          )}
         </div>
 
-        <div className="command-compose">
-          <input readOnly value="Digite uma resposta..." aria-label="Resposta de demonstração" />
-          <button type="button">ENVIAR</button>
+        <div className="command-compose intelligent-compose">
+          <input
+            readOnly
+            value={
+              ["reply", "executed", "approval", "handoff"].includes(assistantState)
+                ? insight.response
+                : "A IA pode preparar uma resposta com o contexto desta conversa..."
+            }
+            aria-label="Resposta inteligente de demonstração"
+          />
+          <button type="button" onClick={generateAssistantReply}>
+            IA SUGERIR
+          </button>
         </div>
       </div>
 
-      <aside className="terminal-panel intelligence-panel">
+      <aside className="terminal-panel intelligence-panel ai-attendant-panel">
         <div className="terminal-section-head">
           <div>
-            <span>Inteligência do contato</span>
-            <small>contexto comercial</small>
+            <span>Atendente inteligente</span>
+            <small>contexto + memória + ações</small>
+          </div>
+          <Status kind="live">AI PREVIEW</Status>
+        </div>
+
+        <div className="ai-engine-summary">
+          <span className="engine-light live" />
+          <div>
+            <strong>PROXY AI ATTENDANT</strong>
+            <small>ambiente demonstrativo controlado</small>
           </div>
         </div>
 
-        <dl className="context-list">
-          <div><dt>Perfil</dt><dd>Cliente / prospect</dd></div>
+        <div className="autonomy-control">
+          <div className="autonomy-head">
+            <span>NÍVEL DE AUTONOMIA</span>
+            <strong>{autonomyLevel}/4</strong>
+          </div>
+          <div className="autonomy-levels">
+            {autonomyLevels.map(([level, label, helper]) => (
+              <button
+                type="button"
+                key={level}
+                className={autonomyLevel === Number(level) ? "active" : ""}
+                onClick={() => setAutonomyLevel(Number(level))}
+              >
+                <span>{level}</span>
+                <div><strong>{label}</strong><small>{helper}</small></div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <dl className="context-list ai-contact-memory">
+          <div><dt>Conta</dt><dd>{selected.company}</dd></div>
           <div><dt>Interesse</dt><dd>{selected.category}</dd></div>
           <div><dt>Responsável</dt><dd>{selected.owner}</dd></div>
           <div><dt>Último e-mail</dt><dd>{profile.lastEmail}</dd></div>
-          <div><dt>Interação</dt><dd>Clique registrado</dd></div>
+          <div><dt>Memória</dt><dd>{insight.memory}</dd></div>
         </dl>
 
-        <div className="contact-score">
-          <span>PROPENSÃO COMERCIAL</span>
-          <strong>82</strong>
-          <small>score ilustrativo</small>
-          <div><i style={{ width: "82%" }} /></div>
+        <div className="ai-decision-panel">
+          <span>DECISÃO SUGERIDA</span>
+          <strong>{insight.nextAction}</strong>
+          <small>{insight.confidence}% de confiança demonstrativa</small>
         </div>
+
+        <div className="ai-step-list">
+          {insight.steps.map((step, index) => (
+            <div key={step}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{step}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="ai-action-stack">
+          <button type="button" className="terminal-action" onClick={generateAssistantReply}>
+            GERAR RESPOSTA
+          </button>
+          <button type="button" className="secondary-terminal-button" onClick={simulateAction}>
+            {insight.actionLabel}
+          </button>
+          <button type="button" className="ai-handoff-button" onClick={transferToHuman}>
+            TRANSFERIR PARA HUMANO
+          </button>
+        </div>
+
+        <p className="ai-demo-policy">
+          Nesta demo, respostas e ações são simuladas. Em produção, permissões, fontes de dados,
+          ferramentas e limites de autonomia são configurados por empresa.
+        </p>
       </aside>
     </section>
   );
