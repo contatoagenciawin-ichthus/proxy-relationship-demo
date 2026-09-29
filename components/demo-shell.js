@@ -942,6 +942,11 @@ function EmailSection({ profile, tenant }) {
   });
 
   useEffect(() => {
+    if (tenant.publicDemo) {
+      setEngine({ mode: "preview", liveConfigured: false, publicDemo: true });
+      return;
+    }
+
     let active = true;
 
     fetch("/api/email/test-send", { cache: "no-store" })
@@ -956,10 +961,21 @@ function EmailSection({ profile, tenant }) {
     return () => {
       active = false;
     };
-  }, []);
+  }, [tenant.publicDemo]);
 
   async function handleDemoSend(event) {
     event.preventDefault();
+
+    if (tenant.publicDemo) {
+      setDelivery({
+        status: "success",
+        message: "Fluxo de envio validado em modo demonstrativo. Nenhuma mensagem real foi enviada.",
+        delivered: false,
+        mode: "preview",
+        messageId: null,
+      });
+      return;
+    }
 
     setDelivery({
       status: "loading",
