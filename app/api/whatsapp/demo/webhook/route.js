@@ -74,11 +74,11 @@ async function sendWhatsAppText({ to, body }) {
   }
 
   const response = await fetch(
-    \`https://graph.facebook.com/\${graphVersion()}/\${phoneNumberId}/messages\`,
+    `https://graph.facebook.com/${graphVersion()}/${phoneNumberId}/messages`,
     {
       method: "POST",
       headers: {
-        Authorization: \`Bearer \${token}\`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -98,7 +98,7 @@ async function sendWhatsAppText({ to, body }) {
   const payload = await response.json();
 
   if (!response.ok) {
-    throw new Error(payload?.error?.message || \`WhatsApp Graph API HTTP \${response.status}\`);
+    throw new Error(payload?.error?.message || `WhatsApp Graph API HTTP ${response.status}`);
   }
 
   return payload;
