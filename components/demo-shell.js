@@ -6,7 +6,7 @@ const navItems = [
   ["overview", "Visão geral"],
   ["email", "E-mail"],
   ["contacts", "Contatos"],
-  ["whatsapp", "WhatsApp"],
+  ["whatsapp", "WhatsApp + IA"],
   ["reports", "Inteligência"],
 ];
 
@@ -443,6 +443,333 @@ const radarVisualVariants = {
   ],
 };
 
+
+const sharedMetrics = [
+  ["Base ativa", "1.248", "+36 nos últimos 30 dias"],
+  ["Entregabilidade", "96,8%", "canal de e-mail"],
+  ["Interações", "170", "cliques registrados"],
+  ["Sinais comerciais", "18", "para acompanhamento"],
+];
+
+const genericProfile = {
+  metrics: sharedMetrics,
+  campaigns: [
+    {
+      id: 1,
+      title: "Guia técnico: reduzir paradas não planejadas",
+      segment: "Operações e manutenção",
+      audience: 382,
+      delivered: 371,
+      clicks: 47,
+      status: "sent",
+      statusLabel: "SENT",
+      ctr: "12,3%",
+    },
+    {
+      id: 2,
+      title: "Radar Atlas | eficiência operacional",
+      segment: "Base comercial ativa",
+      audience: 624,
+      delivered: 608,
+      clicks: 92,
+      status: "live",
+      statusLabel: "LIVE",
+      ctr: "14,7%",
+    },
+    {
+      id: 3,
+      title: "Pós-venda como parte da produtividade",
+      segment: "Clientes e projetos ativos",
+      audience: 196,
+      delivered: 191,
+      clicks: 31,
+      status: "sent",
+      statusLabel: "SENT",
+      ctr: "15,8%",
+    },
+  ],
+  contacts: [
+    ["Indústria Horizonte", "Cliente", "Projetos", "Americana · SP", "Ativo", "Hoje, 10:42"],
+    ["MetalNova Sistemas", "Prospect", "Soluções", "Campinas · SP", "Oportunidade", "Hoje, 10:18"],
+    ["Grupo Vetor", "Cliente", "Suporte", "Sorocaba · SP", "Ativo", "Ontem"],
+    ["Operação Delta", "Prospect", "Automação", "São Paulo · SP", "Em contato", "Ontem"],
+    ["NorteSul Equipamentos", "Parceiro", "Integração", "Joinville · SC", "Ativo", "22 set"],
+  ],
+  conversations: [
+    {
+      company: "MetalNova Sistemas",
+      message: "Estamos avaliando uma solução para reduzir paradas e organizar o suporte técnico.",
+      category: "Soluções",
+      priority: "Alta",
+      owner: "Comercial",
+      time: "10:42",
+    },
+    {
+      company: "Grupo Vetor",
+      message: "Precisamos de apoio técnico para revisar uma etapa da operação.",
+      category: "Suporte",
+      priority: "Normal",
+      owner: "Equipe técnica",
+      time: "09:18",
+    },
+    {
+      company: "Operação Delta",
+      message: "Gostaria de receber informações sobre possibilidades de automação.",
+      category: "Comercial",
+      priority: "Alta",
+      owner: "Comercial",
+      time: "Ontem",
+    },
+  ],
+  activity: [
+    ["11:31", "MetalNova abriu campanha", "Interesse detectado em eficiência operacional", "E-MAIL"],
+    ["11:27", "Nova conversa recebida", "Solicitação comercial direcionada para atendimento prioritário", "WHATSAPP"],
+    ["11:18", "Operação Delta clicou em conteúdo", "Contato marcado para acompanhamento comercial", "SINAL"],
+    ["10:54", "Campanha entregue", "Novo lote de mensagens aceito pelo provedor", "E-MAIL"],
+    ["10:41", "Contato atualizado", "Interesse principal alterado para automação", "CRM"],
+  ],
+  signals: [
+    ["Soluções", 38],
+    ["Suporte", 27],
+    ["Projetos", 21],
+    ["Conteúdo", 14],
+  ],
+  contactTotal: "1.248 REGISTROS",
+  contactStats: [
+    ["TODOS", "1.248"],
+    ["CLIENTES", "786"],
+    ["PROSPECTS", "312"],
+    ["PARCEIROS", "150"],
+  ],
+  lastEmail: "Radar Atlas | eficiência operacional",
+  radarSources: [
+    ["Associações setoriais", "Tendências, regulamentação e movimentos do mercado", "MONITORADA"],
+    ["Publicações técnicas", "Operação, tecnologia, produtividade e gestão", "MONITORADA"],
+    ["Fabricantes & parceiros", "Lançamentos, aplicações e suporte", "CURADORIA"],
+    ["Mercado", "Indicadores, investimentos e sinais econômicos", "INDICADORES"],
+    ["Feiras & eventos", "Agenda setorial e oportunidades comerciais", "AGENDA"],
+    ["Base comercial", "Interesses, dúvidas e sinais recorrentes dos contatos", "SINAIS"],
+  ],
+  radarTopics: [
+    {
+      id: "automacao",
+      relevance: "ALTA",
+      trend: "EM DESTAQUE",
+      title: "Automação e eficiência operacional",
+      summary: "Como integrar processos, reduzir gargalos e transformar capacidade em produtividade previsível.",
+      sources: ["Publicações técnicas", "Fabricantes & parceiros", "Base comercial"],
+      audience: "Gestores industriais / operações",
+      relation: "Automação · produtividade · projetos",
+      angle: "Sair da promessa genérica de automação e mostrar como processo, integração e suporte impactam o resultado.",
+      articleTitle: "Automação resolve tudo? O que realmente melhora a eficiência de uma operação",
+      objective: "Educação + relacionamento",
+      outline: [
+        "Onde operações normalmente perdem eficiência",
+        "O papel da automação e da integração",
+        "Indicadores que ajudam a medir resultado",
+        "O que avaliar antes de investir",
+        "Por que suporte e continuidade entram na conta",
+      ],
+    },
+    {
+      id: "manutencao",
+      relevance: "ALTA",
+      trend: "RECORRENTE",
+      title: "Disponibilidade, manutenção e suporte",
+      summary: "O custo de parada, a previsibilidade operacional e o papel do pós-venda na produtividade.",
+      sources: ["Publicações técnicas", "Fabricantes & parceiros", "Base comercial"],
+      audience: "Operações / manutenção / direção",
+      relation: "Suporte · pós-venda · continuidade",
+      angle: "Tratar manutenção e suporte como parte da decisão de investimento, não como assunto posterior à compra.",
+      articleTitle: "Operação parada custa caro: por que suporte também define produtividade",
+      objective: "Educação + comercial",
+      outline: [
+        "Produtividade nominal versus disponibilidade real",
+        "O custo invisível das paradas",
+        "Manutenção e previsibilidade",
+        "O papel do suporte técnico",
+        "Como comparar soluções de forma mais completa",
+      ],
+    },
+    {
+      id: "supply-chain",
+      relevance: "MÉDIA",
+      trend: "ESTRATÉGICO",
+      title: "Cadeia, fornecedores e previsibilidade",
+      summary: "Como informação de mercado e relacionamento com parceiros reduzem incerteza em projetos B2B.",
+      sources: ["Associações setoriais", "Mercado", "Fabricantes & parceiros"],
+      audience: "Direção / compras / operações",
+      relation: "Fornecedores · projetos · planejamento",
+      angle: "Mostrar que previsibilidade depende de informação, relacionamento e acompanhamento contínuo da cadeia.",
+      articleTitle: "Mais previsibilidade em projetos B2B começa antes do pedido de compra",
+      objective: "Relacionamento + autoridade",
+      outline: [
+        "Onde surgem as principais incertezas",
+        "Informação de mercado e planejamento",
+        "Relacionamento com fornecedores e parceiros",
+        "Sinais que merecem acompanhamento",
+        "Como antecipar conversas comerciais",
+      ],
+    },
+    {
+      id: "mercado",
+      relevance: "MÉDIA",
+      trend: "ACOMPANHAR",
+      title: "Mercado, tecnologia e oportunidades",
+      summary: "Eventos, movimentos da cadeia e novas tecnologias como gatilho para relacionamento útil.",
+      sources: ["Mercado", "Feiras & eventos", "Associações setoriais"],
+      audience: "Direção / comercial",
+      relation: "Mercado · oportunidades · relacionamento",
+      angle: "Transformar sinais do setor em contato recorrente sem reduzir a comunicação a campanhas promocionais.",
+      articleTitle: "O que acompanhar no mercado antes da próxima decisão de investimento",
+      objective: "Relacionamento + posicionamento",
+      outline: [
+        "Quais sinais merecem acompanhamento",
+        "Tecnologia, investimentos e fornecedores",
+        "Feiras e agenda do setor",
+        "Movimentos que antecipam demanda",
+        "Como transformar informação em relacionamento",
+      ],
+    },
+  ],
+  radarChannelCopy: {
+    automacao: {
+      email: {
+        eyebrow: "EFICIÊNCIA OPERACIONAL",
+        subject: "Automação resolve tudo? O que realmente melhora a eficiência",
+        preheader: "Integração, processo, suporte e indicadores precisam entrar na mesma conversa.",
+        headline: "Produtividade não começa na velocidade. Começa no processo.",
+        body: "Ao avaliar automação, vale olhar para o conjunto: integração, estabilidade, tempo de resposta, manutenção e suporte. É essa combinação que transforma tecnologia em resultado operacional previsível.",
+        cta: "Ler análise completa",
+      },
+      whatsapp: {
+        intro: "Separamos uma pauta recorrente em operações B2B:",
+        highlight: "Automação e eficiência não são sinônimos.",
+        body: "O ganho aparece quando tecnologia, processo, integração e suporte trabalham juntos.",
+        cta: "Quer receber a análise completa?",
+      },
+      linkedin: {
+        headline: "Automação industrial: eficiência depende do sistema, não apenas da tecnologia.",
+        body: "Projetos de automação geram mais valor quando partem de um processo compreendido, indicadores claros e uma estrutura capaz de sustentar a operação depois da implantação.",
+        footer: "Tecnologia, operação e suporte precisam ser avaliados juntos.",
+      },
+    },
+    manutencao: {
+      email: {
+        eyebrow: "CONTINUIDADE OPERACIONAL",
+        subject: "Operação parada custa caro: por que suporte também define produtividade",
+        preheader: "Manutenção e pós-venda precisam entrar na decisão antes do problema.",
+        headline: "Disponibilidade operacional também é produtividade.",
+        body: "Uma solução pode ser tecnicamente excelente e ainda gerar fricção se manutenção, peças, suporte ou tempo de resposta não forem considerados. Pós-venda faz parte do desempenho do investimento.",
+        cta: "Ver critérios de avaliação",
+      },
+      whatsapp: {
+        intro: "Uma pergunta simples para qualquer projeto:",
+        highlight: "o que acontece quando a operação para?",
+        body: "Manutenção, suporte e tempo de resposta também precisam entrar na conta do investimento.",
+        cta: "Quer receber um checklist de avaliação?",
+      },
+      linkedin: {
+        headline: "Produtividade também se mede quando a operação não está produzindo.",
+        body: "Disponibilidade, suporte e manutenção determinam quanto da capacidade instalada se transforma de fato em produção. Pós-venda não é detalhe operacional.",
+        footer: "Continuidade é parte do resultado.",
+      },
+    },
+    "supply-chain": {
+      email: {
+        eyebrow: "CADEIA + PREVISIBILIDADE",
+        subject: "Mais previsibilidade em projetos B2B começa antes do pedido de compra",
+        preheader: "Informação e relacionamento ajudam a reduzir incerteza na cadeia.",
+        headline: "Relacionamento com fornecedores também é infraestrutura de decisão.",
+        body: "Projetos B2B dependem de prazos, disponibilidade, suporte e contexto de mercado. Organizar esses sinais e manter contato recorrente com parceiros aumenta a capacidade de antecipação.",
+        cta: "Explorar o tema",
+      },
+      whatsapp: {
+        intro: "Um ponto que costuma aparecer tarde demais nos projetos:",
+        highlight: "previsibilidade da cadeia.",
+        body: "Informação de mercado e relacionamento com parceiros ajudam a antecipar riscos e decisões.",
+        cta: "Quer receber os principais sinais para acompanhar?",
+      },
+      linkedin: {
+        headline: "Previsibilidade em projetos B2B não começa no pedido. Começa na informação.",
+        body: "Prazos, fornecedores, tecnologia e mercado mudam rapidamente. Empresas que organizam esses sinais conseguem iniciar conversas antes que uma necessidade vire urgência.",
+        footer: "Informação útil também reduz incerteza.",
+      },
+    },
+    mercado: {
+      email: {
+        eyebrow: "RADAR DE MERCADO",
+        subject: "O que acompanhar antes da próxima decisão de investimento",
+        preheader: "Mercado, tecnologia, eventos e fornecedores criam contexto para decisões melhores.",
+        headline: "Decisão comercial começa antes da cotação.",
+        body: "Movimentos do setor, eventos, novos fornecedores e tecnologias ajudam a formar o contexto de uma decisão. Acompanhar esses sinais permite conversar com o mercado antes que a demanda vire apenas um pedido de preço.",
+        cta: "Ver sinais para acompanhar",
+      },
+      whatsapp: {
+        intro: "Alguns sinais valem acompanhar antes de uma decisão de investimento:",
+        highlight: "mercado, tecnologia, eventos e fornecedores.",
+        body: "Organizar essas informações ajuda a antecipar conversas e avaliar melhor o momento de cada projeto.",
+        cta: "Quer receber um resumo periódico?",
+      },
+      linkedin: {
+        headline: "Relacionamento comercial melhora quando a conversa começa antes da cotação.",
+        body: "Eventos, lançamentos, movimentos de mercado e novas tecnologias criam contexto para decisões B2B. Acompanhar esses sinais permite manter uma conversa útil sem depender apenas de campanhas promocionais.",
+        footer: "Informação útil também é relacionamento.",
+      },
+    },
+  },
+  radarVisualVariants: {
+    default: [
+      {
+        id: "industrial-photo",
+        label: "Fotografia industrial",
+        title: "Operação em contexto",
+        subtitle: "Tecnologia, processo e escala",
+        prompt: "Ambiente industrial contemporâneo, equipamentos e processo em operação, fotografia editorial técnica, luz industrial controlada, composição B2B sofisticada, sem logotipos e sem texto",
+      },
+      {
+        id: "technical-grid",
+        label: "Diagrama técnico",
+        title: "Informação aplicada à operação",
+        subtitle: "Dados, processo e decisão",
+        prompt: "Diagrama industrial abstrato, grid técnico, indicadores de processo, fluxos e módulos, estética sofisticada de engenharia, sem logotipos e sem texto",
+      },
+      {
+        id: "market-editorial",
+        label: "Editorial de mercado",
+        title: "Tema em movimento",
+        subtitle: "Contexto para relacionamento comercial",
+        prompt: "Composição editorial B2B industrial com elementos de mercado, tecnologia e operação, visual premium e corporativo, sem logotipos e sem texto",
+      },
+    ],
+  },
+};
+
+const texfieldProfile = {
+  metrics: sharedMetrics,
+  campaigns,
+  contacts,
+  conversations,
+  activity,
+  signals,
+  contactTotal: "1.248 REGISTROS",
+  contactStats: [
+    ["TODOS", "1.248"],
+    ["CLIENTES", "786"],
+    ["PROSPECTS", "312"],
+    ["PARCEIROS", "150"],
+  ],
+  lastEmail: "Novidades Texfield",
+  radarSources,
+  radarTopics,
+  radarChannelCopy,
+  radarVisualVariants,
+};
+
+function getDemoProfile(tenant) {
+  return tenant?.id === "texfield" ? texfieldProfile : genericProfile;
+}
+
 function Status({ kind = "neutral", children }) {
   return <span className={"terminal-status " + kind}>{children}</span>;
 }
@@ -457,14 +784,119 @@ function Metric({ label, value, helper }) {
   );
 }
 
-function Overview({ setSection }) {
+
+function ProxyMark({ compact = false }) {
+  return (
+    <span className={"proxy-mark" + (compact ? " compact" : "")} aria-hidden="true">
+      <span />
+    </span>
+  );
+}
+
+function DemoLanding({ tenant, onEnter, proxySiteUrl }) {
+  return (
+    <main className="proxy-demo-entry">
+      <div className="proxy-entry-grid" aria-hidden="true" />
+      <div className="proxy-entry-glow" aria-hidden="true" />
+
+      <header className="proxy-entry-header">
+        <a className="proxy-entry-brand" href={proxySiteUrl}>
+          <ProxyMark />
+          <div>
+            <strong>PROXY</strong>
+            <span>TECHNOLOGY</span>
+          </div>
+        </a>
+
+        <div className="proxy-entry-meta">
+          <span>RELATIONSHIP INTELLIGENCE</span>
+          <b>DEMO PLATFORM</b>
+        </div>
+      </header>
+
+      <section className="proxy-entry-hero">
+        <div className="proxy-entry-copy">
+          <p className="proxy-entry-eyebrow">
+            Proxy Technology · relacionamento, comunicação e inteligência
+          </p>
+
+          <h1>Relacionamento construído para entrar na operação.</h1>
+
+          <p className="proxy-entry-lead">
+            Explore como base própria, e-mail, WhatsApp, sinais comerciais,
+            inteligência de mercado e conteúdo podem operar em um mesmo ambiente.
+          </p>
+
+          <div className="proxy-entry-principle">
+            <span>HUMAN-CENTERED AI</span>
+            <p>
+              Tecnologia para reduzir atrito operacional e ampliar a capacidade das
+              pessoas de decidir, atender e manter relacionamentos de maior valor.
+            </p>
+          </div>
+
+          <div className="proxy-entry-actions">
+            <button type="button" className="proxy-primary-action" onClick={onEnter}>
+              EXPLORAR DEMONSTRAÇÃO
+            </button>
+            <a className="proxy-secondary-action" href={proxySiteUrl}>
+              CONHECER A PROXY ↗
+            </a>
+          </div>
+        </div>
+
+        <aside className="proxy-entry-panel">
+          <div className="proxy-entry-panel-head">
+            <span>AMBIENTE DEMONSTRATIVO</span>
+            <b>ONLINE</b>
+          </div>
+
+          <div className="proxy-entry-tenant">
+            <small>ORGANIZAÇÃO SIMULADA</small>
+            <strong>{tenant.brand}</strong>
+            <p>{tenant.companyDescription}</p>
+          </div>
+
+          <div className="proxy-entry-flow">
+            {[
+              ["01", "Base própria", "Contatos, segmentos e histórico"],
+              ["02", "E-mail", "Campanhas, entrega e interação"],
+              ["03", "WhatsApp", "Atendimento e contexto comercial"],
+              ["04", "Inteligência", "Radar, sinais e oportunidades"],
+              ["05", "Conteúdo", "Adaptação multicanal e ativos"],
+            ].map(([number, title, description]) => (
+              <div key={number}>
+                <span>{number}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <small>{description}</small>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="proxy-entry-disclaimer">
+            Empresa, contatos e métricas são fictícios. Ações públicas não enviam
+            mensagens nem consomem geração de imagem real.
+          </p>
+        </aside>
+      </section>
+
+      <footer className="proxy-entry-footer">
+        <span>PROXY TECHNOLOGY · SOFTWARE · IA · AUTOMAÇÃO · INTEGRAÇÕES</span>
+        <span>DEMO / {tenant.id.toUpperCase()}</span>
+      </footer>
+    </main>
+  );
+}
+
+function Overview({ setSection, profile, tenant }) {
   return (
     <>
       <section className="metric-strip">
-        <Metric label="Base ativa" value="1.248" helper="+36 nos últimos 30 dias" />
-        <Metric label="Entregabilidade" value="96,8%" helper="canal de e-mail" />
-        <Metric label="Interações" value="170" helper="cliques registrados" />
-        <Metric label="Sinais comerciais" value="18" helper="para acompanhamento" />
+        {profile.metrics.map(([label, value, helper]) => (
+          <Metric key={label} label={label} value={value} helper={helper} />
+        ))}
       </section>
 
       <section className="terminal-grid overview-grid">
@@ -492,7 +924,7 @@ function Overview({ setSection }) {
                 </tr>
               </thead>
               <tbody>
-                {campaigns.map((campaign) => (
+                {profile.campaigns.map((campaign) => (
                   <tr key={campaign.id}>
                     <td>
                       <Status kind={campaign.status === "live" ? "live" : "sent"}>
@@ -523,7 +955,7 @@ function Overview({ setSection }) {
           </div>
 
           <div className="activity-stream">
-            {activity.map(([time, title, description, channel]) => (
+            {profile.activity.map(([time, title, description, channel]) => (
               <div className="activity-row" key={time + title}>
                 <time>{time}</time>
                 <div>
@@ -545,7 +977,7 @@ function Overview({ setSection }) {
           </div>
 
           <div className="signal-list">
-            {signals.map(([label, value]) => (
+            {profile.signals.map(([label, value]) => (
               <div className="signal-row" key={label}>
                 <div className="signal-row-top">
                   <span>{label}</span>
@@ -594,11 +1026,8 @@ function Overview({ setSection }) {
         </div>
         <div className="industrial-copy">
           <span className="terminal-kicker">Conteúdo em destaque</span>
-          <h2>Máquinas, peças e oportunidades podem virar relacionamento mensurável.</h2>
-          <p>
-            A mesma operação que informa o mercado registra interesse, organiza contatos
-            e entrega contexto para o time comercial.
-          </p>
+          <h2>{tenant.featureHeadline}</h2>
+          <p>{tenant.featureBody}</p>
           <button className="terminal-action" onClick={() => setSection("email")}>
             Ver campanha em operação
           </button>
@@ -608,8 +1037,8 @@ function Overview({ setSection }) {
   );
 }
 
-function EmailSection() {
-  const [selected, setSelected] = useState(campaigns[1]);
+function EmailSection({ profile, tenant }) {
+  const [selected, setSelected] = useState(profile.campaigns[1] || profile.campaigns[0]);
   const [recipient, setRecipient] = useState("");
   const [engine, setEngine] = useState(null);
   const [delivery, setDelivery] = useState({
@@ -619,6 +1048,11 @@ function EmailSection() {
   });
 
   useEffect(() => {
+    if (tenant.publicDemo) {
+      setEngine({ mode: "preview", liveConfigured: false, publicDemo: true });
+      return;
+    }
+
     let active = true;
 
     fetch("/api/email/test-send", { cache: "no-store" })
@@ -633,10 +1067,21 @@ function EmailSection() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [tenant.publicDemo]);
 
   async function handleDemoSend(event) {
     event.preventDefault();
+
+    if (tenant.publicDemo) {
+      setDelivery({
+        status: "success",
+        message: "Fluxo de envio validado em modo demonstrativo. Nenhuma mensagem real foi enviada.",
+        delivered: false,
+        mode: "preview",
+        messageId: null,
+      });
+      return;
+    }
 
     setDelivery({
       status: "loading",
@@ -696,7 +1141,7 @@ function EmailSection() {
         </div>
 
         <div className="campaign-terminal-list">
-          {campaigns.map((campaign) => (
+          {profile.campaigns.map((campaign) => (
             <button
               className={selected.id === campaign.id ? "active" : ""}
               key={campaign.id}
@@ -733,16 +1178,13 @@ function EmailSection() {
 
         <div className="email-editorial-preview">
           <div className="email-preview-rail">
-            <span>TEXFIELD</span>
-            <small>INFORMAÇÃO · TECNOLOGIA · INDÚSTRIA</small>
+            <span>{tenant.brand}</span>
+            <small>{tenant.emailTagline}</small>
           </div>
           <div className="email-preview-body">
             <span className="terminal-kicker">Relacionamento comercial</span>
             <h2>{selected.title}</h2>
-            <p>
-              Máquinas, componentes, assistência e tecnologia para apoiar a operação
-              industrial e manter o relacionamento comercial ativo.
-            </p>
+            <p>{tenant.emailBody}</p>
             <button type="button">Conhecer solução</button>
           </div>
         </div>
@@ -813,7 +1255,7 @@ function EmailSection() {
   );
 }
 
-function ContactsSection() {
+function ContactsSection({ profile }) {
   return (
     <section className="terminal-panel full-terminal">
       <div className="terminal-section-head">
@@ -821,14 +1263,15 @@ function ContactsSection() {
           <span>Base de relacionamento</span>
           <small>contatos, perfil e interesse</small>
         </div>
-        <Status>1.248 REGISTROS</Status>
+        <Status>{profile.contactTotal}</Status>
       </div>
 
       <div className="filter-line">
-        <button className="active">TODOS · 1.248</button>
-        <button>CLIENTES · 786</button>
-        <button>PROSPECTS · 312</button>
-        <button>PARCEIROS · 150</button>
+        {profile.contactStats.map(([label, value], index) => (
+          <button key={label} className={index === 0 ? "active" : ""}>
+            {label} · {value}
+          </button>
+        ))}
       </div>
 
       <div className="terminal-table-wrap">
@@ -844,7 +1287,7 @@ function ContactsSection() {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {profile.contacts.map((contact) => (
               <tr key={contact[0]}>
                 <td><strong>{contact[0]}</strong></td>
                 <td>{contact[1]}</td>
@@ -859,17 +1302,125 @@ function ContactsSection() {
       </div>
 
       <div className="contact-summary-strip">
-        <div><span>Máquinas</span><strong>42%</strong></div>
-        <div><span>Peças</span><strong>31%</strong></div>
-        <div><span>Assistência</span><strong>17%</strong></div>
-        <div><span>Outros</span><strong>10%</strong></div>
+        {profile.signals.map(([label, value]) => (
+          <div key={label}><span>{label}</span><strong>{value}%</strong></div>
+        ))}
       </div>
     </section>
   );
 }
 
-function WhatsAppSection() {
-  const [selected, setSelected] = useState(conversations[0]);
+function getAssistantInsight(selected) {
+  const category = selected.category?.toLowerCase() || "";
+
+  if (category.includes("suporte")) {
+    return {
+      intent: "Suporte técnico",
+      confidence: 96,
+      memory: "Cliente ativo · histórico técnico localizado",
+      signal: "Possível impacto operacional",
+      nextAction: "Abrir atendimento técnico e notificar responsável",
+      actionLabel: "CRIAR ATENDIMENTO",
+      response:
+        "Encontrei o histórico desta conta e vou registrar a solicitação como atendimento técnico. A equipe responsável recebe o contexto desta conversa para continuar sem você precisar repetir as informações.",
+      steps: [
+        "Vincular conversa ao cadastro",
+        "Criar atendimento técnico",
+        "Anexar contexto da mensagem",
+        "Notificar equipe responsável",
+      ],
+    };
+  }
+
+  if (category.includes("peça")) {
+    return {
+      intent: "Cotação de peças",
+      confidence: 94,
+      memory: "Conta reconhecida · interesse anterior em reposição",
+      signal: "Oportunidade comercial de alta prioridade",
+      nextAction: "Criar oportunidade e solicitar identificação do equipamento",
+      actionLabel: "ABRIR OPORTUNIDADE",
+      response:
+        "Claro. Já identifiquei sua empresa e registrei a solicitação de peças. Para direcionarmos a cotação corretamente, preciso apenas do modelo do equipamento ou de uma foto da identificação da máquina.",
+      steps: [
+        "Vincular conversa ao cadastro",
+        "Criar oportunidade de peças",
+        "Solicitar modelo ou identificação",
+        "Direcionar ao responsável comercial",
+      ],
+    };
+  }
+
+  if (category.includes("soluç")) {
+    return {
+      intent: "Diagnóstico comercial",
+      confidence: 91,
+      memory: "Prospect identificado · interesse em eficiência operacional",
+      signal: "Demanda com potencial de projeto",
+      nextAction: "Criar oportunidade e coletar contexto da operação",
+      actionLabel: "QUALIFICAR OPORTUNIDADE",
+      response:
+        "Posso ajudar com isso. Registrei seu interesse em reduzir paradas e organizar o suporte. Para direcionar a conversa, gostaria de entender qual etapa da operação hoje gera mais impacto ou recorrência de parada.",
+      steps: [
+        "Criar oportunidade no CRM",
+        "Classificar intenção comercial",
+        "Solicitar contexto operacional",
+        "Preparar handoff para especialista",
+      ],
+    };
+  }
+
+  return {
+    intent: "Interesse comercial",
+    confidence: 92,
+    memory: "Contato reconhecido · interações anteriores disponíveis",
+    signal: "Interesse ativo em solução",
+    nextAction: "Atualizar CRM e preparar continuidade comercial",
+    actionLabel: "ATUALIZAR CRM",
+    response:
+      "Posso ajudar. Já relacionei sua mensagem ao histórico da empresa e vou organizar as informações para que o atendimento continue a partir deste contexto, sem reiniciar a conversa.",
+    steps: [
+      "Vincular conversa ao cadastro",
+      "Atualizar interesse no CRM",
+      "Registrar contexto comercial",
+      "Direcionar ao responsável",
+    ],
+  };
+}
+
+const autonomyLevels = [
+  ["1", "Assistente", "Sugere respostas"],
+  ["2", "Supervisionado", "Pede aprovação"],
+  ["3", "Operação assistida", "Executa ações permitidas"],
+  ["4", "Autonomia", "Resolve fluxos autorizados"],
+];
+
+function WhatsAppSection({ profile }) {
+  const [selected, setSelected] = useState(profile.conversations[0]);
+  const [autonomyLevel, setAutonomyLevel] = useState(3);
+  const [assistantState, setAssistantState] = useState("idle");
+  const insight = useMemo(() => getAssistantInsight(selected), [selected]);
+
+  function chooseConversation(conversation) {
+    setSelected(conversation);
+    setAssistantState("idle");
+  }
+
+  function analyzeConversation() {
+    setAssistantState("analyzed");
+  }
+
+  function generateAssistantReply() {
+    setAssistantState("reply");
+  }
+
+  function simulateAction() {
+    setAssistantState(autonomyLevel >= 3 ? "executed" : "approval");
+  }
+
+  function transferToHuman() {
+    setAssistantState("handoff");
+  }
 
   return (
     <section className="whatsapp-command-grid">
@@ -883,10 +1434,10 @@ function WhatsAppSection() {
         </div>
 
         <div className="conversation-terminal-list">
-          {conversations.map((conversation) => (
+          {profile.conversations.map((conversation) => (
             <button
               key={conversation.company}
-              onClick={() => setSelected(conversation)}
+              onClick={() => chooseConversation(conversation)}
               className={selected.company === conversation.company ? "active" : ""}
             >
               <div>
@@ -922,56 +1473,158 @@ function WhatsAppSection() {
             <p>{selected.message}</p>
           </div>
 
-          <div className="context-event">
-            <span>SISTEMA</span>
-            <strong>Contexto identificado · {selected.category}</strong>
-            <small>Responsável sugerido: {selected.owner}</small>
-          </div>
+          {assistantState === "idle" ? (
+            <button className="ai-analysis-trigger" type="button" onClick={analyzeConversation}>
+              <span>PROXY AI</span>
+              <strong>ANALISAR CONTEXTO DA CONVERSA</strong>
+              <small>CRM + histórico + intenção + regras operacionais</small>
+            </button>
+          ) : (
+            <div className="ai-context-event">
+              <div className="ai-context-head">
+                <span>PROXY AI · CONTEXTO</span>
+                <Status kind="live">{insight.confidence}% CONFIANÇA</Status>
+              </div>
+              <div className="ai-context-grid">
+                <div><span>INTENÇÃO</span><strong>{insight.intent}</strong></div>
+                <div><span>MEMÓRIA</span><strong>{insight.memory}</strong></div>
+                <div><span>SINAL</span><strong>{insight.signal}</strong></div>
+                <div><span>PRÓXIMA AÇÃO</span><strong>{insight.nextAction}</strong></div>
+              </div>
+            </div>
+          )}
 
-          <div className="log-entry outgoing">
-            <time>10:43</time>
-            <p>
-              Olá! Recebemos sua mensagem. Vou direcionar sua solicitação ao responsável
-              e seguimos por aqui.
-            </p>
-          </div>
+          {["reply", "executed", "approval", "handoff"].includes(assistantState) && (
+            <div className="log-entry outgoing ai-reply">
+              <time>IA · resposta sugerida</time>
+              <p>{insight.response}</p>
+            </div>
+          )}
+
+          {assistantState === "executed" && (
+            <div className="context-event ai-action-event">
+              <span>AÇÃO SIMULADA</span>
+              <strong>{insight.nextAction}</strong>
+              <small>CRM atualizado · contexto preservado · responsável notificado</small>
+            </div>
+          )}
+
+          {assistantState === "approval" && (
+            <div className="context-event ai-approval-event">
+              <span>APROVAÇÃO NECESSÁRIA</span>
+              <strong>O nível de autonomia atual não permite executar esta ação sozinho.</strong>
+              <small>A resposta pode ser sugerida, mas a ação aguarda um operador.</small>
+            </div>
+          )}
+
+          {assistantState === "handoff" && (
+            <div className="context-event ai-handoff-event">
+              <span>HANDOFF HUMANO</span>
+              <strong>Conversa transferida com contexto completo.</strong>
+              <small>Responsável: {selected.owner} · histórico e intenção anexados.</small>
+            </div>
+          )}
         </div>
 
-        <div className="command-compose">
-          <input readOnly value="Digite uma resposta..." aria-label="Resposta de demonstração" />
-          <button type="button">ENVIAR</button>
+        <div className="command-compose intelligent-compose">
+          <input
+            readOnly
+            value={
+              ["reply", "executed", "approval", "handoff"].includes(assistantState)
+                ? insight.response
+                : "A IA pode preparar uma resposta com o contexto desta conversa..."
+            }
+            aria-label="Resposta inteligente de demonstração"
+          />
+          <button type="button" onClick={generateAssistantReply}>
+            IA SUGERIR
+          </button>
         </div>
       </div>
 
-      <aside className="terminal-panel intelligence-panel">
+      <aside className="terminal-panel intelligence-panel ai-attendant-panel">
         <div className="terminal-section-head">
           <div>
-            <span>Inteligência do contato</span>
-            <small>contexto comercial</small>
+            <span>Atendente inteligente</span>
+            <small>contexto + memória + ações</small>
+          </div>
+          <Status kind="live">AI PREVIEW</Status>
+        </div>
+
+        <div className="ai-engine-summary">
+          <span className="engine-light live" />
+          <div>
+            <strong>PROXY AI ATTENDANT</strong>
+            <small>ambiente demonstrativo controlado</small>
           </div>
         </div>
 
-        <dl className="context-list">
-          <div><dt>Perfil</dt><dd>Cliente / prospect</dd></div>
+        <div className="autonomy-control">
+          <div className="autonomy-head">
+            <span>NÍVEL DE AUTONOMIA</span>
+            <strong>{autonomyLevel}/4</strong>
+          </div>
+          <div className="autonomy-levels">
+            {autonomyLevels.map(([level, label, helper]) => (
+              <button
+                type="button"
+                key={level}
+                className={autonomyLevel === Number(level) ? "active" : ""}
+                onClick={() => setAutonomyLevel(Number(level))}
+              >
+                <span>{level}</span>
+                <div><strong>{label}</strong><small>{helper}</small></div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <dl className="context-list ai-contact-memory">
+          <div><dt>Conta</dt><dd>{selected.company}</dd></div>
           <div><dt>Interesse</dt><dd>{selected.category}</dd></div>
           <div><dt>Responsável</dt><dd>{selected.owner}</dd></div>
-          <div><dt>Último e-mail</dt><dd>Novidades Texfield</dd></div>
-          <div><dt>Interação</dt><dd>Clique registrado</dd></div>
+          <div><dt>Último e-mail</dt><dd>{profile.lastEmail}</dd></div>
+          <div><dt>Memória</dt><dd>{insight.memory}</dd></div>
         </dl>
 
-        <div className="contact-score">
-          <span>PROPENSÃO COMERCIAL</span>
-          <strong>82</strong>
-          <small>score ilustrativo</small>
-          <div><i style={{ width: "82%" }} /></div>
+        <div className="ai-decision-panel">
+          <span>DECISÃO SUGERIDA</span>
+          <strong>{insight.nextAction}</strong>
+          <small>{insight.confidence}% de confiança demonstrativa</small>
         </div>
+
+        <div className="ai-step-list">
+          {insight.steps.map((step, index) => (
+            <div key={step}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{step}</strong>
+            </div>
+          ))}
+        </div>
+
+        <div className="ai-action-stack">
+          <button type="button" className="terminal-action" onClick={generateAssistantReply}>
+            GERAR RESPOSTA
+          </button>
+          <button type="button" className="secondary-terminal-button" onClick={simulateAction}>
+            {insight.actionLabel}
+          </button>
+          <button type="button" className="ai-handoff-button" onClick={transferToHuman}>
+            TRANSFERIR PARA HUMANO
+          </button>
+        </div>
+
+        <p className="ai-demo-policy">
+          Nesta demo, respostas e ações são simuladas. Em produção, permissões, fontes de dados,
+          ferramentas e limites de autonomia são configurados por empresa.
+        </p>
       </aside>
     </section>
   );
 }
 
-function ReportsSection() {
-  const [selectedTopicId, setSelectedTopicId] = useState(radarTopics[0].id);
+function ReportsSection({ profile, tenant }) {
+  const [selectedTopicId, setSelectedTopicId] = useState(profile.radarTopics[0].id);
   const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [draftVisible, setDraftVisible] = useState(false);
   const [distributionState, setDistributionState] = useState("");
@@ -988,13 +1641,13 @@ function ReportsSection() {
   });
 
   const selectedTopic =
-    radarTopics.find((topic) => topic.id === selectedTopicId) || radarTopics[0];
+    profile.radarTopics.find((topic) => topic.id === selectedTopicId) || profile.radarTopics[0];
 
   const channelCopy =
-    radarChannelCopy[selectedTopic.id] || radarChannelCopy.automacao;
+    profile.radarChannelCopy[selectedTopic.id] || profile.radarChannelCopy[profile.radarTopics[0].id];
 
   const visualSet =
-    radarVisualVariants[selectedTopic.id] || radarVisualVariants.default;
+    profile.radarVisualVariants[selectedTopic.id] || profile.radarVisualVariants.default;
 
   const activeVisual = visualSet[visualIndex % visualSet.length];
 
@@ -1008,6 +1661,11 @@ function ReportsSection() {
     : undefined;
 
   useEffect(() => {
+    if (tenant.publicDemo) {
+      setImageEngine({ mode: "preview", liveConfigured: false, publicDemo: true });
+      return;
+    }
+
     let active = true;
 
     fetch("/api/editorial/generate-image", { cache: "no-store" })
@@ -1022,7 +1680,7 @@ function ReportsSection() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [tenant.publicDemo]);
 
   function resetImageGeneration() {
     setImageGeneration({
@@ -1071,6 +1729,18 @@ function ReportsSection() {
   }
 
   async function generateVisualImage() {
+    if (tenant.publicDemo) {
+      setImageGeneration({
+        status: "success",
+        imageUrl: null,
+        assetId: null,
+        prompt: activeVisual.prompt,
+        message: "Prompt visual preparado. A geração real fica bloqueada na demonstração pública.",
+        mode: "preview",
+      });
+      return;
+    }
+
     setImageGeneration((current) => ({
       ...current,
       status: "loading",
@@ -1131,7 +1801,7 @@ function ReportsSection() {
           <h2>Do mercado para uma pauta útil de relacionamento.</h2>
           <p>
             Fontes selecionadas, sinais do setor e oportunidades editoriais organizadas
-            para ajudar a Texfield a manter contato recorrente sem depender de pautas
+            para ajudar a {tenant.brand} a manter contato recorrente sem depender de pautas
             improvisadas.
           </p>
         </div>
@@ -1223,7 +1893,7 @@ function ReportsSection() {
                 <strong>{selectedTopic.audience}</strong>
               </div>
               <div>
-                <span>RELAÇÃO COM A TEXFIELD</span>
+                <span>{tenant.relationLabel}</span>
                 <strong>{selectedTopic.relation}</strong>
               </div>
             </div>
@@ -1334,7 +2004,7 @@ function ReportsSection() {
                   <p>
                     A proposta do assistente é organizar o raciocínio e acelerar a primeira
                     versão. Dados técnicos, exemplos, posicionamento e referências continuam
-                    sob revisão da Texfield antes de qualquer publicação.
+                    sob revisão da {tenant.brand} antes de qualquer publicação.
                   </p>
                 </article>
               </div>
@@ -1417,9 +2087,11 @@ function ReportsSection() {
                     </div>
 
                     <small className="visual-demo-note">
-                      {imageEngine?.mode === "live" && imageEngine?.liveConfigured
-                        ? "Geração real habilitada. O ativo é armazenado e reutilizado nos previews dos canais."
-                        : "Em preview, validamos prompt e fluxo sem consumir geração de imagem. Ao ativar live, OpenAI + Blob + Neon passam a operar este botão."}
+                      {tenant.publicDemo
+                        ? "Na demonstração pública, a direção visual e o prompt podem ser explorados sem consumir APIs pagas."
+                        : imageEngine?.mode === "live" && imageEngine?.liveConfigured
+                          ? "Geração real habilitada. O ativo pode ser armazenado e reutilizado nos previews dos canais."
+                          : "Em preview, validamos prompt e fluxo sem consumir geração de imagem."}
                     </small>
 
                     {imageGeneration.status !== "idle" && (
@@ -1498,7 +2170,7 @@ function ReportsSection() {
 
                       <div className="email-preview-message">
                         <div className="email-preview-brand">
-                          <strong>TEXFIELD</strong>
+                          <strong>{tenant.brand}</strong>
                           <span>INFORMAÇÃO · TECNOLOGIA · INDÚSTRIA</span>
                         </div>
                         <div
@@ -1525,9 +2197,9 @@ function ReportsSection() {
                   {selectedChannel === "whatsapp" && (
                     <div className="whatsapp-device-preview">
                       <div className="phone-topbar">
-                        <div className="phone-avatar">TX</div>
+                        <div className="phone-avatar">{tenant.initials}</div>
                         <div>
-                          <strong>Texfield</strong>
+                          <strong>{tenant.brand}</strong>
                           <span>canal de relacionamento</span>
                         </div>
                       </div>
@@ -1557,10 +2229,10 @@ function ReportsSection() {
                   {selectedChannel === "linkedin" && (
                     <div className="linkedin-device-preview">
                       <div className="linkedin-author">
-                        <div className="linkedin-avatar">TX</div>
+                        <div className="linkedin-avatar">{tenant.initials}</div>
                         <div>
-                          <strong>Texfield</strong>
-                          <span>Máquinas, peças e soluções para a indústria têxtil</span>
+                          <strong>{tenant.brand}</strong>
+                          <span>{tenant.linkedinDescription}</span>
                           <small>Agora · 🌐</small>
                         </div>
                       </div>
@@ -1569,7 +2241,7 @@ function ReportsSection() {
                         <strong>{channelCopy.linkedin.headline}</strong>
                         <p>{channelCopy.linkedin.body}</p>
                         <p className="linkedin-footer-copy">{channelCopy.linkedin.footer}</p>
-                        <span>#IndústriaTêxtil #Tecnologia #Produtividade</span>
+                        <span>{tenant.hashtags}</span>
                       </div>
 
                       <div
@@ -1643,6 +2315,10 @@ function ReportsSection() {
 export default function DemoShell({ tenant }) {
   const [section, setSection] = useState("overview");
   const [clock, setClock] = useState("");
+  const [showGuide, setShowGuide] = useState(Boolean(tenant.publicDemo));
+  const profile = useMemo(() => getDemoProfile(tenant), [tenant]);
+  const proxySiteUrl =
+    process.env.NEXT_PUBLIC_PROXY_SITE_URL || "https://proxy.ichthusmkt.com.br";
 
   useEffect(() => {
     const update = () => {
@@ -1665,26 +2341,47 @@ export default function DemoShell({ tenant }) {
     [section],
   );
 
+  if (tenant.publicDemo && showGuide) {
+    return (
+      <DemoLanding
+        tenant={tenant}
+        proxySiteUrl={proxySiteUrl}
+        onEnter={() => setShowGuide(false)}
+      />
+    );
+  }
+
   return (
     <main className="command-shell">
+      <div className="proxy-product-bar">
+        <a className="proxy-product-brand" href={proxySiteUrl}>
+          <ProxyMark compact />
+          <div>
+            <strong>PROXY</strong>
+            <span>RELATIONSHIP INTELLIGENCE</span>
+          </div>
+        </a>
+
+        <div className="proxy-product-context">
+          <span>DEMO TENANT</span>
+          <strong>{tenant.brand}</strong>
+        </div>
+
+        <a className="proxy-product-link" href={proxySiteUrl}>
+          PROXY TECHNOLOGY ↗
+        </a>
+      </div>
       <div className="market-ticker" aria-label="Faixa informacional demonstrativa">
         <div className="ticker-track">
-          <span>ALGODÃO <b>MONITORAMENTO</b></span>
-          <span>USD / BRL <b>CÂMBIO</b></span>
-          <span>EUR / BRL <b>CÂMBIO</b></span>
-          <span>INDÚSTRIA TÊXTIL <b>OPORTUNIDADES</b></span>
-          <span>FEIRAS & EVENTOS <b>AGENDA 2026</b></span>
-          <span>PEÇAS & SERVIÇOS <b>RELACIONAMENTO</b></span>
-          <span>ALGODÃO <b>MONITORAMENTO</b></span>
-          <span>USD / BRL <b>CÂMBIO</b></span>
-          <span>EUR / BRL <b>CÂMBIO</b></span>
-          <span>INDÚSTRIA TÊXTIL <b>OPORTUNIDADES</b></span>
+          {[...tenant.ticker, ...tenant.ticker].map(([label, value], index) => (
+            <span key={label + value + index}>{label} <b>{value}</b></span>
+          ))}
         </div>
       </div>
 
       <header className="command-header">
         <div className="command-brand">
-          <div className="command-logo">TX</div>
+          <div className="command-logo">{tenant.initials}</div>
           <div>
             <strong>{tenant.brand}</strong>
             <span>RELATIONSHIP INTELLIGENCE / COMMAND CENTER</span>
@@ -1694,7 +2391,7 @@ export default function DemoShell({ tenant }) {
         <div className="command-status">
           <span><i /> SISTEMA ONLINE</span>
           <b>{clock || "--:--:--"}</b>
-          <small>AMBIENTE DEMONSTRATIVO · DADOS ILUSTRATIVOS</small>
+          <small>{tenant.demoLabel.toUpperCase()}</small>
         </div>
       </header>
 
@@ -1710,20 +2407,25 @@ export default function DemoShell({ tenant }) {
             </button>
           ))}
         </div>
-        <span className="current-view">{activeLabel.toUpperCase()}</span>
+        <div className="nav-utilities">
+          <button className="demo-reset" type="button" onClick={() => window.location.reload()}>
+            REINICIAR DEMO
+          </button>
+          <span className="current-view">{activeLabel.toUpperCase()}</span>
+        </div>
       </nav>
 
       <div className="command-content">
-        {section === "overview" && <Overview setSection={setSection} />}
-        {section === "email" && <EmailSection />}
-        {section === "contacts" && <ContactsSection />}
-        {section === "whatsapp" && <WhatsAppSection />}
-        {section === "reports" && <ReportsSection />}
+        {section === "overview" && <Overview setSection={setSection} profile={profile} tenant={tenant} />}
+        {section === "email" && <EmailSection profile={profile} tenant={tenant} />}
+        {section === "contacts" && <ContactsSection profile={profile} />}
+        {section === "whatsapp" && <WhatsAppSection profile={profile} />}
+        {section === "reports" && <ReportsSection profile={profile} tenant={tenant} />}
       </div>
 
       <footer className="command-footer">
-        <span>PROXY TECHNOLOGY · RELATIONSHIP PLATFORM</span>
-        <span>TENANT / TEXFIELD</span>
+        <span>POWERED BY PROXY TECHNOLOGY · RELATIONSHIP INTELLIGENCE</span>
+        <span>DEMO TENANT / {tenant.id.toUpperCase()}</span>
       </footer>
     </main>
   );
