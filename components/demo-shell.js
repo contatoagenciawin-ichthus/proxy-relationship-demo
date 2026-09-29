@@ -1468,7 +1468,7 @@ function ReportsSection({ profile, tenant }) {
           <h2>Do mercado para uma pauta útil de relacionamento.</h2>
           <p>
             Fontes selecionadas, sinais do setor e oportunidades editoriais organizadas
-            para ajudar a Texfield a manter contato recorrente sem depender de pautas
+            para ajudar a {tenant.brand} a manter contato recorrente sem depender de pautas
             improvisadas.
           </p>
         </div>
@@ -1898,7 +1898,7 @@ function ReportsSection({ profile, tenant }) {
                       <div className="linkedin-author">
                         <div className="linkedin-avatar">{tenant.initials}</div>
                         <div>
-                          <strong>Texfield</strong>
+                          <strong>{tenant.brand}</strong>
                           <span>{tenant.linkedinDescription}</span>
                           <small>Agora · 🌐</small>
                         </div>
