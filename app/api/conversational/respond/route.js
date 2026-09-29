@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getConversationalTenant } from "../../../config/conversational-tenants";
+import { getConversationalTenant } from "../../../../config/conversational-tenants";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
