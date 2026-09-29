@@ -76,3 +76,50 @@ Criar um painel interno da Proxy para gerar uma demonstração personalizada a p
 - idioma.
 
 O objetivo é produzir uma URL personalizada sem alterar o núcleo da aplicação.
+
+
+## Camada de identidade Proxy
+
+A Demo Master não deve parecer um produto isolado. Ela usa uma camada externa alinhada ao site institucional da Proxy:
+
+- fundo preto;
+- grid técnico;
+- acento ciano;
+- marca Proxy com quadrado ciano;
+- microcopy em caixa alta e tipografia monoespaçada;
+- bordas finas e alto contraste;
+- transição visual para o Command Center sem redesenhar o produto operacional.
+
+Nos tenants personalizados, o cliente continua sendo a organização apresentada, mas a aplicação exibe claramente **Proxy Relationship Intelligence** e **Powered by Proxy Technology**.
+
+## Estratégia de domínio
+
+Enquanto o domínio próprio da Proxy não estiver definido, o site institucional continua em:
+
+`https://proxy.ichthusmkt.com.br/`
+
+A origem institucional usada pela demo é configurável por:
+
+```env
+NEXT_PUBLIC_PROXY_SITE_URL=https://proxy.ichthusmkt.com.br
+```
+
+Quando o domínio próprio entrar, a aplicação não precisa ser reconstruída. Basta atualizar essa variável e configurar o domínio da demo na Vercel.
+
+Estrutura recomendada:
+
+```
+dominio-da-proxy.com.br
+→ site institucional
+
+demo.dominio-da-proxy.com.br
+→ Demo Master
+
+demo.dominio-da-proxy.com.br/texfield
+→ tenant personalizado
+
+app.dominio-da-proxy.com.br
+→ futura plataforma operacional
+```
+
+O projeto da demo deve permanecer separado tecnicamente do site institucional, ainda que visualmente faça parte do mesmo ecossistema.
