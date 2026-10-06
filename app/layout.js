@@ -1,8 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Texfield | Central de Relacionamento",
-  description: "Ambiente demonstrativo da plataforma de relacionamento Proxy Technology.",
+  title: "Proxy Relationship Intelligence | Demo",
+  description:
+    "Ambiente demonstrativo da plataforma de relacionamento, comunicação e inteligência comercial da Proxy Technology.",
 };
 
 export default function RootLayout({ children }) {
