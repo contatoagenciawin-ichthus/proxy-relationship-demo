@@ -54,12 +54,14 @@ function verifyWebhookSignature(rawBody, signatureHeader) {
 
 function inferRole(messageText) {
   const text = String(messageText || "").toLocaleLowerCase("pt-BR");
+
   if (
     ["sou filha", "sou filho", "minha mãe", "minha mae", "meu pai", "cuidador", "cuidadora", "familiar"]
       .some((term) => text.includes(term))
   ) {
     return "family";
   }
+
   return "patient";
 }
 
@@ -84,16 +86,21 @@ async function sendWhatsAppText({ to, body }) {
         recipient_type: "individual",
         to,
         type: "text",
-        text: { preview_url: false, body: String(body || "").slice(0, 3500) },
+        text: {
+          preview_url: false,
+          body: String(body || "").slice(0, 3500),
+        },
       }),
       signal: AbortSignal.timeout(12000),
     },
   );
 
   const payload = await response.json();
+
   if (!response.ok) {
     throw new Error(payload?.error?.message || `WhatsApp Graph API HTTP ${response.status}`);
   }
+
   return payload;
 }
 
@@ -103,14 +110,24 @@ function extractIncomingMessages(payload) {
   for (const entry of payload?.entry || []) {
     for (const change of entry?.changes || []) {
       if (change?.field !== "messages") continue;
+
       const value = change?.value || {};
+      const contacts = new Map(
+        (value.contacts || []).map((contact) => [
+          contact.wa_id,
+          contact.profile?.name || "",
+        ]),
+      );
 
       for (const message of value.messages || []) {
         messages.push({
           id: message.id,
           from: message.from,
+          timestamp: message.timestamp,
           type: message.type,
           text: message.type === "text" ? message.text?.body || "" : "",
+          contactName: contacts.get(message.from) || "",
+          phoneNumberId: value.metadata?.phone_number_id || "",
         });
       }
     }
@@ -121,36 +138,58 @@ function extractIncomingMessages(payload) {
 
 async function processIncomingMessage(message) {
   if (!message?.id || !message?.from) return { ignored: "invalid_message" };
-  if (!isAllowedNumber(message.from)) return { ignored: "not_allowlisted" };
-  if (!conversationalDatabaseConfigured()) throw new Error("Database is not configured");
-  if (await conversationMessageExists(message.id)) return { ignored: "duplicate" };
+
+  if (!isAllowedNumber(message.from)) {
+    console.info("WhatsApp demo message ignored: sender not allowlisted");
+    return { ignored: "not_allowlisted" };
+  }
+
+  if (!conversationalDatabaseConfigured()) {
+    throw new Error("Conversational demo database is not configured");
+  }
+
+  if (await conversationMessageExists(message.id)) {
+    return { ignored: "duplicate" };
+  }
 
   const tenant = getConversationalTenant("amanda-fialho");
+  const userKey = externalUserKey(message.from);
+  const role = inferRole(message.text);
+
   const session = await getOrCreateConversationSession({
     tenantKey: tenant.id,
     channel: "whatsapp",
-    externalUserKey: externalUserKey(message.from),
-    role: inferRole(message.text),
+    externalUserKey: userKey,
+    role,
   });
 
-  const incomingText =
-    message.type === "text"
-      ? message.text.trim()
-      : "[A pessoa enviou uma mensagem não textual. Explique com gentileza que esta primeira versão do piloto aceita apenas texto.]";
+  let incomingText = message.text.trim();
+
+  if (message.type !== "text") {
+    incomingText =
+      "[A pessoa enviou uma mensagem não textual. Nesta primeira versão do piloto, o atendente deve explicar com gentileza que o teste aceita apenas texto.]";
+  }
 
   await insertConversationMessage({
     sessionId: session.id,
     externalMessageId: message.id,
     role: "user",
     content: incomingText,
-    metadata: { type: message.type },
+    metadata: {
+      type: message.type,
+      contactName: message.contactName || undefined,
+    },
   });
 
   const history = await loadConversationMessages(session.id, 14);
+
   const result = await respondConversationally({
     tenant,
-    role: inferRole(message.text),
+    role,
     messages: history,
+    channel: "whatsapp",
+    forceMode:
+      process.env.WHATSAPP_DEMO_AI_MODE === "live" ? "live" : "preview",
   });
 
   await insertConversationMessage({
@@ -188,14 +227,18 @@ export async function GET(request) {
 
   if (mode === "subscribe") {
     const expected = process.env.WHATSAPP_DEMO_VERIFY_TOKEN?.trim();
+
     if (expected && token === expected && challenge) {
       return new Response(challenge, {
         status: 200,
         headers: { "Content-Type": "text/plain" },
       });
     }
+
     return new Response("Forbidden", { status: 403 });
   }
+
+  const allowed = normalizedAllowedNumbers();
 
   return NextResponse.json({
     ok: true,
@@ -212,7 +255,7 @@ export async function GET(request) {
       sessionSecret: Boolean(process.env.WHATSAPP_DEMO_SESSION_SECRET?.trim()),
       database: conversationalDatabaseConfigured(),
       openai: Boolean(process.env.OPENAI_API_KEY?.trim()),
-      allowedTesters: normalizedAllowedNumbers().length,
+      allowedTesters: allowed.length,
     },
     retentionHours: 24,
   });
@@ -227,6 +270,7 @@ export async function POST(request) {
   }
 
   let payload;
+
   try {
     payload = JSON.parse(rawBody);
   } catch {
@@ -234,19 +278,26 @@ export async function POST(request) {
   }
 
   const messages = extractIncomingMessages(payload);
+
   if (!messages.length) {
     return NextResponse.json({ ok: true, ignored: "no_incoming_messages" });
   }
 
   try {
     await purgeExpiredConversationDemoData(24);
+
     const results = [];
     for (const message of messages) {
       results.push(await processIncomingMessage(message));
     }
+
     return NextResponse.json({ ok: true, results });
   } catch (error) {
     console.error("Conversational WhatsApp demo webhook error", error);
-    return NextResponse.json({ ok: false, error: "processing_failed" }, { status: 500 });
+
+    return NextResponse.json(
+      { ok: false, error: "processing_failed" },
+      { status: 500 },
+    );
   }
 }
